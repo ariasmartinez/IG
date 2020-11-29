@@ -1,3 +1,6 @@
+//Nombre: Celia, Apellidos: Arias Martínez, DNI: 26510285w (DDGG IG curso 20-21)
+
+
 // *********************************************************************
 // **
 // ** Gestión de materiales y texturas (declaraciones)

@@ -1,3 +1,6 @@
+//Nombre: Celia, Apellidos: Arias Martínez, DNI: 26510285w (DDGG IG curso 20-21)
+
+
 // *********************************************************************
 // **
 // ** Informática Gráfica, curso 2016-17
