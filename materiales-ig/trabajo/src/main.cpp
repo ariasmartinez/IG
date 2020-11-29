@@ -223,7 +223,10 @@ void FGE_PulsarLevantarTecla( GLFWwindow* window, int key, int scancode, int act
          ind_escena_act = (ind_escena_act+1) % escenas.size();
          cout << "Escena actual cambiada a: " << (ind_escena_act+1) << endl << flush ;
          break ;
-
+      
+      case GLFW_KEY_U:
+         
+      break;
 
       // tecla para terminar
       case GLFW_KEY_ESCAPE:

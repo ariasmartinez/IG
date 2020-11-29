@@ -227,8 +227,9 @@ Escena3::Escena3(){
    using namespace std;
 
    cout << "Creando objetos de escena 3..." << flush;
+   objetos.push_back(new Cubo());
    //objetos.push_back( new bb8());
-  //objetos.push_back( new Pulpo(12));
+  objetos.push_back( new Pulpo(12));
    cout << "hecho." << endl << flush;
 }
 

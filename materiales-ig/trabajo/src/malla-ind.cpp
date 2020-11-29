@@ -116,22 +116,15 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    // (en cualquier caso hay que pasar como parámetro el tipo de primitiva adecuada a una malla de triángulos).
    // .....
 
+     
+   if (esferaXY.size()==0) calcularEnvolvente();
   
-   //codigo repetido de escena.cpp
-   /*GLenum vis_pol;
-     switch(cv.modo_visu){
-      case (ModosVisu::relleno):
-         vis_pol = GL_FILL;
-      break;
-      case (ModosVisu::lineas):
-         vis_pol = GL_LINE;
-      break;
-      case (ModosVisu::puntos):
-         vis_pol = GL_POINT;
-      break;
-      default:
-         cout << "malla-ind.cpp::visualizarGL:: cv.modo_rellano extraño" << endl;
-   };*/
+   ArrayVertices * array_verts2 = new ArrayVertices(GL_FLOAT, 3, esferaXZ.size(), esferaXZ.data());
+   array_verts2->visualizarGL_MD_VAO(GL_LINES);
+   ArrayVertices * array_verts3 = new ArrayVertices(GL_FLOAT, 3, esferaYZ.size(), esferaYZ.data());
+   array_verts3->visualizarGL_MD_VAO(GL_LINES);
+   ArrayVertices * array_verts4 = new ArrayVertices(GL_FLOAT, 3, esferaXY.size(), esferaXY.data());
+   array_verts4->visualizarGL_MD_VAO(GL_LINES);
 
    GLenum vis_pol = GL_TRIANGLES;
 
@@ -300,7 +293,6 @@ El punto calculado en 2 será el centro de la esfera envolvente y la distancia m
 Programar el método de forma que una vez estos vértices estén calculados no se vuelvan a calcular a no ser que la malla haya cambiado.
 
 */
-
 double MallaInd::dist(Tupla3f v, Tupla3f v2){
    return sqrt(pow(v(0)-v2(0),2)+pow(v(1)-v2(1),2)+pow(v(2)-v2(2),2));
 }
@@ -333,8 +325,6 @@ void MallaInd::calcularEnvolvente(){
 
 
 
-  /* MallaRevol::Esfera envolv = new MallaRevol::Esfera(200, 200);
-   agregar(MAT_Traslacion(centro(0), centro(1), centro(2)));
-   agregar(MAT_Escalado(maxim, maxim, maxim));
-   agregar(envolv);*/
+  
 }
+
