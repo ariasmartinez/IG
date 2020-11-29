@@ -13,6 +13,7 @@
 #include "objeto3d.h"   // declaración de 'Objeto3D'
 #include "array-verts.h" // clase 'ArrayVert'
 
+
 // ---------------------------------------------------------------------
 // clase para objetos gráficos genéricos
 
@@ -33,7 +34,9 @@ class MallaInd : public Objeto3D
       std::vector<Tupla3f> nor_tri ;  // normales de triangulos
       std::vector<Tupla2f> cc_tt_ver ; // coordenadas de textura de los vértices
 
-     
+      std::vector<Tupla3f> esferaXZ;
+      std::vector<Tupla3f> esferaYZ;
+      std::vector<Tupla3f> esferaXY;
       // array de vértices con información de tablas para visualizar
       // (se crea bajo demanda: la primera vez que se llama a 'visualizarGL')
       ArrayVertices * array_verts = nullptr ; 
@@ -59,8 +62,8 @@ class MallaInd : public Objeto3D
       virtual void visualizarGL( ContextoVis & cv ) ;
 
 
-
-
+      double dist(Tupla3f v, Tupla3f v2);
+      void calcularEnvolvente();
 
 
 } ;
@@ -103,6 +106,8 @@ class CuboColores : public MallaInd
    public:
       CuboColores();
 };
+
+
 
 
 

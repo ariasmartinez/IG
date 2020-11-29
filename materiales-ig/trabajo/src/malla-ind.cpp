@@ -95,6 +95,9 @@ void MallaInd::visualizarGL( ContextoVis & cv )
       array_verts = new ArrayVertices( GL_FLOAT, 3, vertices.size(), vertices.data());
    
    
+
+
+   
    array_verts->fijarIndices( GL_UNSIGNED_INT, 3*triangulos.size(), triangulos.data());
 
    
@@ -105,7 +108,7 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    if (!nor_ver.empty())
       array_verts->fijarNormales(GL_FLOAT, nor_ver.data());
 
-  
+   
    // COMPLETAR: práctica 1: visualizar según el modo (en 'cv.modo_envio')
    //   ** inmediato begin/end       : usar método 'visualizarGL_MI_BVE' de 'ArrayVerts'
    //   ** inmediato con una llamada : usar método 'visualizarGL_MI_DAE' de 'ArrayVerts'
@@ -282,3 +285,56 @@ CuboColores::CuboColores() : MallaInd("cubo colores"){
 
 
 
+/*
+
+Programar un método dentro de la clase mallaInd que calcule la esfera envolvente de la malla, para ello:
+1. Añadir tres atributos privados a la clase: 
+- vector<Tupla3f> esferaXZ
+- vector<Tupla3f> esferaYZ
+- vector<Tupla3f> esferaXY
+que contendrán las coordenadas de los puntos que compongan, respectivamente, el ecuador, el meridiano paralelo al plano x=0 y el meridiano paralelo al plano z=0
+2. Hallar el centro geométrico de la malla, para ello, calcular la media aritmética de todos los vértices que la componen (caso de haber al menos uno, en otro caso se supone el (0,0,0) )
+3. Hallar la máxima de las distancias del centro geométrico calculado anteriormente a un vértice de la malla.
+El punto calculado en 2 será el centro de la esfera envolvente y la distancia máxima calculada en 3 será el radio de dicha esfera.
+4. Calcular una cantidad representativa de puntos que pertenezcan al plano paralelo a y=0 que pasa por el centro geométrico y que están a una distancia igual al radio calculado en 3 y almacenarlos en esferaXZ, análogamente con puntos paralelos a x=0 en esferaYZ y con puntos paralelos a z=0 en esferaXY. 
+Programar el método de forma que una vez estos vértices estén calculados no se vuelvan a calcular a no ser que la malla haya cambiado.
+
+*/
+
+double MallaInd::dist(Tupla3f v, Tupla3f v2){
+   return sqrt(pow(v(0)-v2(0),2)+pow(v(1)-v2(1),2)+pow(v(2)-v2(2),2));
+}
+
+
+void MallaInd::calcularEnvolvente(){
+   double media_x = 0 ; double media_y = 0; double media_z = 0;
+   double max_x = vertices[0](0); double max_y = vertices[0](1); double max_z = vertices[0](2);
+   Tupla3f centro(0,0,0);
+   int num_prec = 100;
+   if (vertices.size()>0){
+      for (int i = 0; i < vertices.size();i++){
+         media_x += vertices[i](0);
+         media_y += vertices[i](1);
+         media_z += vertices[i](2);
+      }
+      Tupla3f centro(media_x/float(vertices.size()), media_y/float(vertices.size()), media_z/float(vertices.size()));
+   }
+
+   double radio = 0;
+   for (int i = 0; i < vertices.size(); i++)
+      radio = std::max(dist(vertices[i], centro), radio);
+   
+   
+   for (int i = 0; i < num_prec; i++){
+      esferaXZ.push_back({float(centro(0)+radio*(cos(2*M_PI*i/num_prec))),centro(1), float(centro(2)+radio*(sin(2*M_PI*i/num_prec)))});
+      esferaYZ.push_back({centro(0),centro(1)+radio*(cos(2*M_PI*i/num_prec)), centro(2)+radio*(sin(2*M_PI*i/num_prec))});
+      esferaXY.push_back({centro(0)+radio*(sin(2*M_PI*i/num_prec)),centro(1)+radio*(cos(2*M_PI*i/num_prec)), centro(2)});
+   }
+
+
+
+  /* MallaRevol::Esfera envolv = new MallaRevol::Esfera(200, 200);
+   agregar(MAT_Traslacion(centro(0), centro(1), centro(2)));
+   agregar(MAT_Escalado(maxim, maxim, maxim));
+   agregar(envolv);*/
+}
