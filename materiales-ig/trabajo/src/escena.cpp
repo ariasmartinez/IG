@@ -13,7 +13,7 @@
 
 //celia
 #include "modelo-jer.h"
-#include "modelo-jer1.h"
+
 
 // -----------------------------------------------------------------------------------------------
 
@@ -34,22 +34,6 @@ Escena::Escena()
 void Escena::visualizarGL( ContextoVis & cv )
 {
    using namespace std ;
-      GLenum vis_pol;
-   // celia: convertimos el enum de cv_modovisu a GL_...
-   switch(cv.modo_visu){
-      case (ModosVisu::relleno):
-         vis_pol = GL_FILL;
-      break;
-      case (ModosVisu::lineas):
-         vis_pol = GL_LINE;
-      break;
-      case (ModosVisu::puntos):
-         vis_pol = GL_POINT;
-      break;
-      default:
-         cout << "escena.cpp::visualizarGL:: cv.modo_rellano extraño" << endl;
-   };
-
 
    // recuperar el cauce actual de 'cv' en 'cauce', activarlo
    Cauce * cauce = cv.cauce_act ; assert( cauce != nullptr );
@@ -80,6 +64,23 @@ void Escena::visualizarGL( ContextoVis & cv )
    //    cv.modo_visu   (puntos,lineas o relleno) --> usar glPolygonMode
 
    cauce->fijarModoSombrPlano(cv.sombr_plano);
+
+   GLenum vis_pol;
+   switch(cv.modo_visu){
+      case (ModosVisu::relleno):
+         vis_pol = GL_FILL;
+      break;
+      case (ModosVisu::lineas):
+         vis_pol = GL_LINE;
+      break;
+      case (ModosVisu::puntos):
+         vis_pol = GL_POINT;
+      break;
+      default:
+         cout << "Modo relleno en escena desconocido" << endl;
+   };
+
+
    glPolygonMode(GL_FRONT_AND_BACK, vis_pol);
 
   
@@ -103,14 +104,9 @@ void Escena::visualizarGL( ContextoVis & cv )
 
    // COMPLETAR: Práctica 1: visualizar el objeto actual ('objeto')
 
-  
-
    objeto->visualizarGL(cv);
 
-   
-
    // si hay un FBO, dibujarlo (opcional...)
-
 
 }
 
@@ -206,9 +202,7 @@ Escena2::Escena2(){
    objetos.push_back(new MallaRevolPLY("../recursos/plys/lata-pcue", 10));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/beethoven", 1000));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/cow", 100));
-   //objetos.push_back(new MallaRevolPLY("../recursos/plys/airplane", 100));
-   //objetos.push_back(new MallaRevolPLY("../recursos/plys/apple", 50));
-   //objetos.push_back( new Cubo() );
+ 
    objetos.push_back( new Cilindro(20,50));
    objetos.push_back( new Cono(20,50));
    objetos.push_back( new Esfera(20,50));
@@ -228,7 +222,6 @@ Escena3::Escena3(){
 
    cout << "Creando objetos de escena 3..." << flush;
    objetos.push_back( new bb8());
-  objetos.push_back( new Pulpo(12));
    cout << "hecho." << endl << flush;
 }
 

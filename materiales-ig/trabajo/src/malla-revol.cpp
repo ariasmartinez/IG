@@ -29,23 +29,13 @@ void MallaRevol::inicializar
 {
    // COMPLETAR: Práctica 2: completar: creación de la malla....
 
-   //perfil.size(); -> num vertices? (m)?
-   //num_copias -> n?
-   
-   //creación de tabla de vértices
    Tupla3f q;
    double angulo;
-   //Matriz4f matriz_rotacion;
    
    for (double i = 0; i < num_copias; i++){
       for (double j = 0; j < perfil.size(); j++){
-         //vertice obtenido tras rotar pj un angulo igual a 2ipi/(n-1) radianes
          angulo = 2*i*180/(num_copias-1);
-         
-         //matriz_rotacion = MAT_Rotacion(angulo, perfil[j](X), perfil[j](Y), perfil[j](Z));
-         
          q = MAT_Rotacion(angulo, {0,1,0})*perfil[j];
-         
          vertices.push_back(q);
       }
    }
@@ -57,12 +47,8 @@ void MallaRevol::inicializar
    for (int i = 0; i < (num_copias-1); i++){
       for (int j = 0; j < (perfil.size()-1); j++){
          k = i*perfil.size()+j;
-         //triangulo formado por k, k+m, k+m+1
-         //Tupla3i triangulo1(k, k+perfil.size(), k+perfil.size()+1);
          triangulos.push_back({k, k+perfil.size(), k+perfil.size()+1});
-         //Tupla3i triangulo2(k, k+perfil.size()+1, k+1);
          triangulos.push_back({k, k+perfil.size()+1, k+1});
-
       }
    }
    
@@ -108,11 +94,9 @@ Cono::Cono(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
    ponerNombre("Cono");
    vector<Tupla3f> perfil;
     for (int i = 0; i < num_verts_per; i++){
-      //double z = i/n;
       Tupla3f a(1.0-i/(num_verts_per-1), i/(num_verts_per-1),0.0 );
       perfil.push_back(a);
    }
-   //cout << "cilindro fin"<<endl;
    inicializar(perfil, nperfiles);
 }
 
@@ -125,7 +109,6 @@ Esfera::Esfera(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
    vector<Tupla3f> perfil;
    double z;
     for (int i = 0; i < num_verts_per; i++){
-      
       z = i*M_PI/(num_verts_per-1);
       Tupla3f a(sin(z), cos(z),0.0 );
       perfil.push_back(a);
@@ -144,9 +127,7 @@ CilindroRelleno::CilindroRelleno(const int num_verts_per, const unsigned nperfil
       perfil.push_back({1.0, z, 0.0});
       perfil.push_back({0.0, z, 0.0});
    }
-   
    inicializar(perfil, nperfiles);
-   
 }
 
 
@@ -156,7 +137,6 @@ SemiEsfera::SemiEsfera(const int num_verts_per, const unsigned nperfiles): Malla
    vector<Tupla3f> perfil;
    double z;
     for (int i = 0; i < num_verts_per; i++){
-      
       z = M_PI/2 + i*(M_PI/2)/(num_verts_per-1);
       Tupla3f a(sin(z), cos(z),0.0 );
       perfil.push_back(a);

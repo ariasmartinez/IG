@@ -7,23 +7,16 @@
 class Cuerpo : public NodoGrafoEscena{
    public:
    Cuerpo(Matriz4f * &pm_alpha_rot_x,    Matriz4f * &pm_alpha_rot_y, Matriz4f * &pm_alpha_rot_z);
-   //unsigned leerNumParametros();
-   //void actualizarEstadoParametro(const unsigned iParam, const float tSec);
-    //mirar
-    //void leerNumParametros();
-    //void actualizarEstadoParametros();
 };
 
 class Cabeza : public NodoGrafoEscena{
    public:
-   Cabeza(Matriz4f * &pm_beta_rot_cab, Matriz4f * &pm_traslacion_ojo, Matriz4f *&pm_mov_cab);
-   //unsigned leerNumParametros();
-   //void actualizarEstadoParametro(const unsigned iParam, const float tSec);
+   Cabeza(Matriz4f * &pm_beta_rot_cab, Matriz4f * &pm_mov_ojo, Matriz4f *&pm_mov_cab);
 };
 
 class Ojo: public NodoGrafoEscena{
    public:
-   Ojo(Matriz4f * & pm_traslacion_ojo);
+   Ojo(Matriz4f * & pm_mov_ojo);
 };
 
 class bb8: public NodoGrafoEscena{
@@ -33,7 +26,7 @@ class bb8: public NodoGrafoEscena{
       Matriz4f * pm_alpha_rot_z = nullptr;
       Matriz4f * pm_beta_rot_cab = nullptr;
       Matriz4f * pm_traslacion = nullptr;
-      Matriz4f * pm_traslacion_ojo = nullptr;
+      Matriz4f * pm_mov_ojo = nullptr;
       Matriz4f * pm_mov_cab = nullptr;
       void actualizarEstadoParametro(const unsigned iParam, const float tSec);
    public:
@@ -45,12 +38,8 @@ class bb8: public NodoGrafoEscena{
       void fijarAlphaRotZ(const float nuevo_valor);
       void fijarBetaRotCab(const float nuevo_valor);
       void fijarTraslacion(const float nuevo_valor);
-      void fijarTraslacionOjo(const float nuevo_valor);
+      void fijarMovimientoOjo(const float nuevo_valor);
       void fijarMovCabeza(const float nuevo_valor);
 
 };
 
-class Union: public NodoGrafoEscena{
-   public:
-   Union(Matriz4f * &pm_beta_rot_cab, Matriz4f * &pm_traslacion_ojo);
-};

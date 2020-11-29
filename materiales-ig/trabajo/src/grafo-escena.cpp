@@ -82,7 +82,7 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
 {
    // COMPLETAR: práctica 3: recorrer las entradas y visualizar cada nodo.
    // ........
-   //mirar cauce_act
+   
    cv.cauce_act->pushMM();
 
    Tupla4f color;
@@ -91,27 +91,24 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
       switch( entradas[i].tipo)
       {
          case TipoEntNGE::objeto :
-            //CELIA DUDISIMA:
+            
             if (tieneColor()){
-              
-               //guardar color actual en el cauce:
-               color = cv.cauce_act->leerColorActual(); // 
-               glColor3fv(leerColor()); //hay que meterlo en el cauce
-              
+               color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
+               glColor3fv(leerColor()); //fijar color en el cauce leyendolo del objeto
             }
-            entradas[i].objeto->visualizarGL(cv);
+            entradas[i].objeto->visualizarGL(cv); //visualizamos
             if (tieneColor())
-               glColor3fv(color);
-          
+               glColor3fv(color);  //restaurar color del cauce 
             break;
 
          case TipoEntNGE::transformacion:
-            cv.cauce_act->compMM(*(entradas[i].matriz));  //mirar cauce_act?
+            cv.cauce_act->compMM(*(entradas[i].matriz)); 
             break;
       }
    
 
-   cv.cauce_act->popMM(); //mirar cauce_act?
+   cv.cauce_act->popMM();
+
    // COMPLETAR: práctica 4: en la práctica 4, si 'cv.iluminacion' es 'true',
    // se deben de gestionar los materiales:
    //   1. guardar puntero al material activo al inicio (está en cv.material_act)
@@ -152,7 +149,7 @@ unsigned NodoGrafoEscena::agregar( const EntradaNGE & entrada )
    int indice = entradas.size();
    entradas.push_back(entrada);   
 
-   return indice ; // sustituir por lo que corresponda ....
+   return indice ; 
 
 }
 // -----------------------------------------------------------------------------

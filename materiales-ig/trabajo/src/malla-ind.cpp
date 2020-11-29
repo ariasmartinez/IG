@@ -113,22 +113,6 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    // (en cualquier caso hay que pasar como parámetro el tipo de primitiva adecuada a una malla de triángulos).
    // .....
 
-  
-   //codigo repetido de escena.cpp
-   /*GLenum vis_pol;
-     switch(cv.modo_visu){
-      case (ModosVisu::relleno):
-         vis_pol = GL_FILL;
-      break;
-      case (ModosVisu::lineas):
-         vis_pol = GL_LINE;
-      break;
-      case (ModosVisu::puntos):
-         vis_pol = GL_POINT;
-      break;
-      default:
-         cout << "malla-ind.cpp::visualizarGL:: cv.modo_rellano extraño" << endl;
-   };*/
 
    GLenum vis_pol = GL_TRIANGLES;
 
@@ -143,7 +127,7 @@ void MallaInd::visualizarGL( ContextoVis & cv )
          array_verts->visualizarGL_MD_VAO(vis_pol);
       break;
       default:
-         cout << "malla-ind.cpp::visualizarGL:: cv.modo_envio extraño" << endl;
+         cout << "El modo de envío de malla-ind no está definido" << endl;
    }
  
    // restaurar el color previamente fijado
@@ -172,8 +156,6 @@ MallaPLY::MallaPLY( const std::string & nombre_arch )
    
    LeerPLY(nombre_arch,vertices,triangulos);
    
-
-   //hecho
 
    // COMPLETAR: práctica 4: invocar  a 'calcularNormales' para el cálculo de normales
    // .................

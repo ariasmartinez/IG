@@ -222,7 +222,7 @@ void DescrTabla::activar_mi()
 
    fijarPuntero(datos);
    glEnableClientState(atributo);
-   // hecho
+
    CError();
 }
 // -----------------------------------------------------------------------------
