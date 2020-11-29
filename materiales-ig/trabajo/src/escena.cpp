@@ -201,7 +201,7 @@ Escena2::Escena2(){
    objetos.push_back(new MallaRevolPLY("../recursos/plys/peon", 10));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/lata-pcue", 10));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/beethoven", 1000));
-   objetos.push_back(new MallaRevolPLY("../recursos/plys/cow", 100));
+
  
    objetos.push_back( new Cilindro(20,50));
    objetos.push_back( new Cono(20,50));
