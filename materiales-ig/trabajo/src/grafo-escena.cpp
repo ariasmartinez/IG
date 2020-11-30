@@ -23,7 +23,8 @@
 #include "ig-aux.h"
 #include "matrices-tr.h"
 #include "grafo-escena.h"
-
+#include "malla-ind.h"
+#include "malla-revol.h"
 using namespace std ;
 
 // *********************************************************************
@@ -238,3 +239,61 @@ bool NodoGrafoEscena::buscarObjeto
 }
 
 
+
+
+GrafoEstrellaX::GrafoEstrellaX(unsigned n){
+   assert(n > 1);
+   //objeto estrelaz
+   //colocarla perpendicular al eje x
+   //traslacion al origen
+   //escalado 1.3
+   Cono_escalado * c = new Cono_escalado();  //{0.5+0.5*cos(2*M_PI*i/(2*n)), 0.5+0.5*sin(2*M_PI*i/(2*n)),0}
+
+   /*for (int i = 0; i < n; i++){
+      agregar(new Cono_aux(i,n));
+   }*/
+   unsigned ind0 = agregar(MAT_Rotacion(0,{1,0,0}));
+   for (int i = 0; i < n; i++){
+      agregar(MAT_Rotacion(360/float(n),{0,0,1} ));
+      agregar(c);
+   }
+   
+   agregar(MAT_Escalado(13.0/15.0,13.0/15.0,13.0/15.0));
+  // agregar(MAT_Rotacion(90, {1,0,0}));
+   agregar(MAT_Traslacion(-0.5, -0.5,0));
+   agregar(new EstrellaZ(n));
+   
+   rot = leerPtrMatriz(ind0);
+}
+
+
+Cono_escalado::Cono_escalado(){
+   agregar(MAT_Traslacion(1,0,0));
+   agregar(MAT_Rotacion(270,{0,0,1}));
+   agregar(MAT_Escalado(0.14,0.15,0.14));
+   agregar(new Cono(10,20));
+}
+
+
+
+unsigned GrafoEstrellaX::leerNumParametros() const{
+   return 1; 
+}
+
+void GrafoEstrellaX::actualizarEstadoParametro(const unsigned iParam, const float tSec){
+   assert((iParam < leerNumParametros()) && (iParam >= 0));
+   float nuevo_valor;
+   switch(iParam){
+      case 0:  //rotacion eje x
+         nuevo_valor = 200*2.5*M_PI*tSec;
+         fijarAlphaRotX(nuevo_valor);
+      break;
+     
+   }
+}
+
+
+
+void GrafoEstrellaX::fijarAlphaRotX(double nuevo_valor){
+   * rot = MAT_Rotacion(nuevo_valor, {0,0,1});
+}

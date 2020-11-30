@@ -103,7 +103,25 @@ class NodoGrafoEscena : public Objeto3D
 
 
 
+class GrafoEstrellaX : public NodoGrafoEscena{
+   private:
+   Matriz4f *  rot = nullptr;
+   public:
+      GrafoEstrellaX(unsigned n);
+      void actualizarEstadoParametro(const unsigned iParam, const float tSec);
+      unsigned leerNumParametros() const;
+      void fijarAlphaRotX(double nuevo_valor);
+};
 
+class Cono_aux : public NodoGrafoEscena{
+   public:
+      Cono_aux(int i, int n);
+};
+
+class Cono_escalado : public NodoGrafoEscena{
+   public:
+      Cono_escalado();
+};
 
 #endif // GRAFO_ESCENA_HPP
 

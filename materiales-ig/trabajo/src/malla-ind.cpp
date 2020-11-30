@@ -133,25 +133,7 @@ void MallaInd::visualizarGL( ContextoVis & cv )
          cout << "El modo de envío de malla-ind no está definido" << endl;
    }
  
-   ArrayVertices * tetr_env;
-   std::vector<Tupla3f> envolvente;
-   if (envolvente.size()  == 0){
-      calcularEnvolvente();
-      
-      envolvente.push_back(minXminYminZ);
-      envolvente.push_back(minXminYmaxZ);
-      envolvente.push_back(minXmaxYminZ);
-      envolvente.push_back(minXmaxYmaxZ);
-      envolvente.push_back(maxXminYminZ);
-      envolvente.push_back(maxXminYmaxZ);
-      envolvente.push_back(maxXmaxYminZ);
-      envolvente.push_back(maxXmaxYmaxZ);
-      
-      tetr_env =new ArrayVertices( GL_FLOAT, 3, envolvente.size(), envolvente.data());
-   }
-    
-   tetr_env->visualizarGL_MD_VAO(GL_LINES);
-
+  
 
    // restaurar el color previamente fijado
    glColor4fv( color_previo );
@@ -286,54 +268,56 @@ CuboColores::CuboColores() : MallaInd("cubo colores"){
 
 
 
-
-/*
-Programar un método dentro de la clase mallaInd que calcule los vértices del tetraedro paralelo a los ejes más pequeño que contenga a la malla, para ello:
-1. Añadir los siguientes atributos de tipo Tupla3f en la clase mallaInd:
-
-- minXminYminZ
-- minXminYmaxZ
-- minXmaxYminZ
-- minXmaxYmaxZ
-- maxXminYminZ
-- maxXminYmaxZ
-- maxXmaxYminZ
-- maxXmaxYmaxZ
-
-(Perdonad pero es que de este ni siquiera leí el enunciado porque no hice este examen pero por lo que me dijeron entendí esto)
-2. Calcular la máxima y mínima coordenada x de entre todas las coordenadas x de los vértices de la malla. Análogamente con las máximas y mínimas coordenadas y y z.
-3. Con estas medidas, almacenar en cada atributo el vértice correspondiente al tetraedro envolvente. Por ejemplo, en minXmaxYminZ se almacenaria un punto cuyas coordenadas sean la mínima coordenada x, la máxima coordenada y y la mínima coordenada z de las anteriormente calculadas.
-
-*/
-
-
-void MallaInd::calcularEnvolvente(){
-   float min_x = vertices[0](0);
-   float max_x = vertices[0](0);
-   float min_y = vertices[0](1);
-   float max_y = vertices[0](1);
-   float min_z = vertices[0](2);
-   float max_z = vertices[0](2);
-   
-   for (int i = 0; i < vertices.size(); i++){
-      min_x = std::min(vertices[i](0), min_x);
-      max_x = std::max(vertices[i](0), max_x);
-      min_y = std::min(vertices[i](1), min_y);
-      max_y = std::max(vertices[i](1), max_y);
-      min_z = std::min(vertices[i](2), min_z);
-      max_z = std::max(vertices[i](2), max_z);
-
+EstrellaZ::EstrellaZ(unsigned n) : MallaInd ("EstrellaZ"){
+   assert(n > 1);
+   //centro  = (0.5,0.5,0)
+   //radio 1 y 0.5
+   //coord z = 0
+   vertices.push_back({0.5,0.5,0});
+   col_ver.push_back({1,1,1});
+   for (int i = 0; i < (2*n); i++){
+      if (i % 2 == 0)
+         vertices.push_back({0.5+cos(2*M_PI*i/(2*n)), 0.5+sin(2*M_PI*i/(2*n)),0});
+      else
+         vertices.push_back({0.5+0.5*cos(2*M_PI*i/(2*n)), 0.5+0.5*sin(2*M_PI*i/(2*n)),0});
+      col_ver.push_back({vertices[i](0), vertices[i](1), vertices[i](2)});
+      
    }
 
-    minXminYminZ = Tupla3f({min_x,min_y,min_z});
-    minXminYmaxZ = Tupla3f({min_x,min_y,max_z});
-    minXmaxYminZ = Tupla3f({min_x,max_y,min_z});
-    minXmaxYmaxZ = Tupla3f({min_x, max_y, max_z});
-    maxXminYminZ = Tupla3f({max_x,min_y,min_z});
-    maxXminYmaxZ = Tupla3f({max_x, min_y, max_z});
-    maxXmaxYminZ = Tupla3f({max_x,max_y, min_z});
-    maxXmaxYmaxZ = Tupla3f({max_x,max_y,max_z});
+   for (int i = 1; i < 2*n; i++){
+      triangulos.push_back({0,i,i+1});
+   }
+
+   triangulos.push_back({0,vertices.size()-1,1});
+
+   
+};
+
+PiramideEstrellaZ::PiramideEstrellaZ(unsigned n) : MallaInd ("PiramideEstrellaZ"){
+   assert(n>1);
+
+   vertices.push_back({0.5,0.5,0});
+   col_ver.push_back({1,1,1});
+   for (int i = 0; i < (2*n); i++){
+      if (i % 2 == 0)
+         vertices.push_back({0.5+cos(2*M_PI*i/(2*n)), 0.5+sin(2*M_PI*i/(2*n)),0});
+      else
+         vertices.push_back({0.5+0.5*cos(2*M_PI*i/(2*n)), 0.5+0.5*sin(2*M_PI*i/(2*n)),0});
+      col_ver.push_back({vertices[i](0), vertices[i](1), vertices[i](2)});
+      
+   }
+
+   for (int i = 1; i < 2*n; i++){
+      triangulos.push_back({0,i,i+1});
+   }
+
+   triangulos.push_back({0,vertices.size()-1,1});
 
 
+   vertices.push_back({0.5,0.5,0.5});
+   col_ver.push_back({1,1,1});
 
-}
+   for (int i = 1; i < 2*n+1; i++){
+      triangulos.push_back({0,i,vertices.size()-1});
+   }
+};

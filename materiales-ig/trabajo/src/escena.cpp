@@ -173,9 +173,15 @@ Escena1::Escena1()
    cout << "Creando objetos de escena 1 .... " << flush ;
    
    // añadir el objeto 'Cubo' a la lista de objetos de esta escena:
+   objetos.push_back(new GrafoEstrellaX(5));
    objetos.push_back( new Cubo() );
    objetos.push_back( new Tetraedro());
    objetos.push_back( new CuboColores() );
+
+   objetos.push_back(new EstrellaZ(10));
+   objetos.push_back(new PiramideEstrellaZ(10));
+
+   
    // COMPLETAR: Práctica 1: creación del resto objetos de la práctica 1
    // Añadir objetos al vector 'objetos', con:
    //     objetos.push_back( new .... )
