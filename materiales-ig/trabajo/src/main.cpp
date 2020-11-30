@@ -225,7 +225,7 @@ void FGE_PulsarLevantarTecla( GLFWwindow* window, int key, int scancode, int act
          break ;
       
       case GLFW_KEY_U:
-         
+         cv.calcular_envolvente = !cv.calcular_envolvente;
       break;
 
       // tecla para terminar

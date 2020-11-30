@@ -117,15 +117,29 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    // .....
 
      
-   if (esferaXY.size()==0) calcularEnvolvente();
+   ArrayVertices * array_verts2;
+   ArrayVertices * array_verts3;
+   ArrayVertices * array_verts4;
+    
   
-   ArrayVertices * array_verts2 = new ArrayVertices(GL_FLOAT, 3, esferaXZ.size(), esferaXZ.data());
-   array_verts2->visualizarGL_MD_VAO(GL_LINES);
-   ArrayVertices * array_verts3 = new ArrayVertices(GL_FLOAT, 3, esferaYZ.size(), esferaYZ.data());
-   array_verts3->visualizarGL_MD_VAO(GL_LINES);
-   ArrayVertices * array_verts4 = new ArrayVertices(GL_FLOAT, 3, esferaXY.size(), esferaXY.data());
-   array_verts4->visualizarGL_MD_VAO(GL_LINES);
+  if (cv.calcular_envolvente){
+   if (array_verts2 == nullptr)
+   {
+      calcularEnvolvente();
+      array_verts2 = new ArrayVertices(GL_FLOAT, 3, esferaXZ.size(), esferaXZ.data());
+      array_verts3 = new ArrayVertices(GL_FLOAT, 3, esferaYZ.size(), esferaYZ.data());
+      array_verts4 = new ArrayVertices(GL_FLOAT, 3, esferaXY.size(), esferaXY.data());
+   }
 
+      glColor3f(1,1,0);
+     glLineWidth(0.4); 
+   
+   array_verts2->visualizarGL_MI_DAE(GL_LINES);
+   
+   array_verts3->visualizarGL_MI_DAE(GL_LINES);
+  
+   array_verts4->visualizarGL_MI_DAE(GL_LINES);
+  }   
    GLenum vis_pol = GL_TRIANGLES;
 
    switch(cv.modo_envio){
