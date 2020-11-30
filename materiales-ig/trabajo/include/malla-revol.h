@@ -59,6 +59,11 @@ class Cono: public MallaRevol
    Cono(const int num_verts_per, const unsigned nperfiles);
 };
 
+class ConoRelleno: public MallaRevol
+{
+   public:
+   ConoRelleno(const int num_verts_per, const unsigned nperfiles);
+};
 class Esfera : public MallaRevol
 {
    public:

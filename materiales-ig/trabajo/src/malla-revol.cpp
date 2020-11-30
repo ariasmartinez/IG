@@ -100,7 +100,17 @@ Cono::Cono(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
    inicializar(perfil, nperfiles);
 }
 
-
+ConoRelleno::ConoRelleno(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
+{
+   ponerNombre("Cono");
+   vector<Tupla3f> perfil;
+    for (int i = 0; i < num_verts_per; i++){
+      Tupla3f a(1.0-i/(num_verts_per-1), i/(num_verts_per-1),0.0 );
+      perfil.push_back(a);
+   }
+   perfil.push_back({0.0, 1.0, 0.0});
+   inicializar(perfil, nperfiles);
+}
 
 
 Esfera::Esfera(const int num_verts_per, const unsigned nperfiles) : MallaRevol()

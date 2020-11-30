@@ -205,6 +205,7 @@ Escena2::Escena2(){
  
    objetos.push_back( new Cilindro(20,50));
    objetos.push_back( new Cono(20,50));
+   objetos.push_back( new ConoRelleno(20,50));
    objetos.push_back( new Esfera(20,50));
    objetos.push_back( new CilindroRelleno(20,500));
 

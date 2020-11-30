@@ -9,7 +9,6 @@ bb8::bb8(){
    unsigned ind0 = agregar(MAT_Traslacion(0,0,0));
    agregar (new Cuerpo(pm_alpha_rot_y, pm_alpha_rot_x, pm_alpha_rot_z));
 
-         //hola
    agregar( MAT_Traslacion(0,0,0.95));
    agregar( MAT_Escalado(0.57,0.57,0.57));
    agregar(new Cabeza(pm_beta_rot_cab, pm_mov_ojo, pm_mov_cab));
