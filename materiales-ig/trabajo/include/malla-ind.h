@@ -107,6 +107,5 @@ class CuboColores : public MallaInd
       CuboColores();
 };
 
-}
 
 #endif
