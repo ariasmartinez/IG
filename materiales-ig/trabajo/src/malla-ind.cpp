@@ -325,14 +325,14 @@ void MallaInd::calcularEnvolvente(){
 
    }
 
-    minXminYminZ = Tupla3f({min_x,min_y,min_z});
-    minXminYmaxZ = Tupla3f({min_x,min_y,max_z});
-    minXmaxYminZ = Tupla3f({min_x,max_y,min_z});
-    minXmaxYmaxZ = Tupla3f({min_x, max_y, max_z});
-    maxXminYminZ = Tupla3f({max_x,min_y,min_z});
-    maxXminYmaxZ = Tupla3f({max_x, min_y, max_z});
-    maxXmaxYminZ = Tupla3f({max_x,max_y, min_z});
-    maxXmaxYmaxZ = Tupla3f({max_x,max_y,max_z});
+    minXminYminZ = {min_x,min_y,min_z};
+    minXminYmaxZ = {min_x,min_y,max_z};
+    minXmaxYminZ = {min_x,max_y,min_z};
+    minXmaxYmaxZ = {min_x, max_y, max_z};
+    maxXminYminZ = {max_x,min_y,min_z};
+    maxXminYmaxZ = {max_x, min_y, max_z};
+    maxXmaxYminZ = {max_x,max_y, min_z};
+    maxXmaxYmaxZ = {max_x,max_y,max_z};
 
 
 
