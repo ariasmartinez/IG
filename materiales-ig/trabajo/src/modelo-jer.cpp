@@ -152,3 +152,5 @@ void bb8::fijarMovCabeza(const float nuevo_valor){
       *pm_mov_cab = MAT_Rotacion(nuevo_valor, 0,1,0);
       *pm_mov_cab = MAT_Rotacion(nuevo_valor, 1,0,0);
 }
+
+

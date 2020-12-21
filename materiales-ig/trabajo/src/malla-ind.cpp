@@ -262,6 +262,72 @@ CuboColores::CuboColores() : MallaInd("cubo colores"){
    };
    
 }
+
+Casa::Casa() : MallaInd("casa"){
+   //Cubo * c = new Cubo();
+   vertices =
+      {  { -1.0, -1.0, -1.0 }, // 0
+         { -1.0, -1.0, +1.0 }, // 1
+         { -1.0, +1.0, -1.0 }, // 2
+         { -1.0, +1.0, +1.0 }, // 3
+         { +1.0, -1.0, -1.0 }, // 4
+         { +1.0, -1.0, +1.0 }, // 5
+         { +1.0, +1.0, -1.0 }, // 6
+         { +1.0, +1.0, +1.0 }, // 7
+      } ;
+
+  
+
+   triangulos =
+      {  {0,1,3}, {0,3,2}, // X-
+         {4,7,5}, {4,6,7}, // X+ (+4)
+
+        // Y-
+         {2,3,7}, {2,7,6}, // Y+ (+2)
+
+         {0,6,4}, {0,2,6}, // Z-
+         {1,5,7}, {1,7,3}  // Z+ (+1)
+      } ;
+
+   vertices.push_back({1,1.5,0});
+   triangulos.push_back({6,2,vertices.size()-1});
+   triangulos.push_back({7, vertices.size()+1, 6});
+   triangulos.push_back({7,2,vertices.size()-1});
+   triangulos.push_back({3,2,vertices.size()-1});
+   vertices.push_back({0-1,1.5,0});
+    triangulos.push_back({3,2,vertices.size()-1});
+     triangulos.push_back({3,vertices.size()-2,vertices.size()-1});
+
+
+   for (int i = 0; i< vertices.size(); i++){
+      col_ver.push_back({vertices[i](0), vertices[i](1), vertices[i](2)});
+   }
+   //triangulos.erase(triangulos.begin(), triangulos.begin()+1);
+   //triangulos.erase(triangulos.begin());
+   //myvector.erase (myvector.begin()+5);
+}
+
+
+RejillaY::RejillaY(unsigned n, unsigned m) : MallaInd("rejillay"){
+   assert(n > 1);
+   assert (m > 1);
+   float d_m = 1.0/m;
+   float d_n = 1.0/n;
+   for (double i = 0; i < n ; i++){
+      for (double j = 0; j < m ; j++){
+         vertices.push_back({i*d_n, j*d_m, 0.0});
+         col_ver.push_back({i*d_n, j*d_m, 0.0});
+      }
+   }
+
+   for (int i = 1; i < n*m; i++){
+      triangulos.push_back({i,i-n,i-1});
+   
+   }
+
+
+
+}
 // -----------------------------------------------------------------------------------------------
 
 
