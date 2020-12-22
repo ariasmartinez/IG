@@ -108,16 +108,12 @@ class CuboColores : public MallaInd
 };
 
 
-class Casa : public MallaInd
+class Cubo24 : public Cubo24
 {
    public:
-      Casa();
+      Cubo24();
 };
 
-class RejillaY : public MallaInd
-{
-   public:
-      RejillaY(unsigned n, unsigned m);
-};
+
 
 #endif

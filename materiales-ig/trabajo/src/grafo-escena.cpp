@@ -86,6 +86,8 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
    // COMPLETAR: práctica 3: recorrer las entradas y visualizar cada nodo.
    // ........
    
+   Material * material_pre = cv.iluminacion ? cv.material_act : nullptr;
+   
    cv.cauce_act->pushMM();
 
    Tupla4f color;
@@ -107,10 +109,23 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
          case TipoEntNGE::transformacion:
             cv.cauce_act->compMM(*(entradas[i].matriz)); 
             break;
+         case TipoEntNGE::material : // si la entrada es de tipo ’material’
+            if ( cv.iluminacion ){
+            // y si está activada la iluminación
+               cv.material_act = entradas[i].material ; // registrar material
+               cv.material_act->activar( cauce );
+               // activar material
+            }
+         break ;
       }
    
 
    cv.cauce_act->popMM();
+
+   if ( material_pre != nullptr ){
+      cv.material_act = material_previo ;
+      cv.material_act->activar( cauce );
+   }
 
    // COMPLETAR: práctica 4: en la práctica 4, si 'cv.iluminacion' es 'true',
    // se deben de gestionar los materiales:
@@ -239,54 +254,11 @@ bool NodoGrafoEscena::buscarObjeto
 }
 
 
-GrafoCubos::GrafoCubos()
-{
-  ponerNombre("Examen");
-  Rej_esc * rej_esc = new Rej_esc();
-   CuboEscalado * cubo_escalado = new CuboEscalado(movi);
-  for (int i = 0; i < 4; i++){
-     
-     agregar(MAT_Rotacion(90, {0,1,0}));
-     agregar(cubo_escalado);
-     agregar(rej_esc);
-  }
-  
+NodoCubo24::NodoCubo24(){
+   Textura * tex = new Textura("../recursos/imgs/window-icon.jpg");
+   agregar( new Material(tex, 0.2, 0.4, 0.4, 20) ); //DUDA
+   agregar(new Cubo24());
+
+   ponerNombre("Cubo 24 vértices");
 }
 
-
-Rej_esc::Rej_esc(){
-   agregar(MAT_Traslacion(-0.5,0,0.5));
-   agregar(new RejillaY(4,5));
-}
-
-CuboEscalado::CuboEscalado(Matriz4f * &movi){
- 
-   agregar(MAT_Traslacion(1,0.5,0));
-     unsigned ind0 = agregar(MAT_Rotacion(0,{1,0,0}));
-   agregar(MAT_Rotacion(90, {0,1,0}));
-   agregar(MAT_Escalado(0.25,0.15,0.25));
-   agregar(new Cubo());
-
-   movi = leerPtrMatriz(ind0);
-}
-
-unsigned GrafoCubos::leerNumParametros() const{
-   return 1; 
-}
-
-void GrafoCubos::actualizarEstadoParametro(const unsigned iParam, const float tSec){
-   assert((iParam < leerNumParametros()) && (iParam >= 0));
-   float nuevo_valor;
-   switch(iParam){
-      case 0:  
-         nuevo_valor = 20*M_PI*tSec;
-         fijarMovimiento(nuevo_valor);
-      break;
-      
-   }
-}
-
-
-void GrafoCubos::fijarMovimiento(const float t){
-   * movi = MAT_Rotacion(t, {0,1,0});
-}

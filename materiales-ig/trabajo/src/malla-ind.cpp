@@ -51,7 +51,22 @@ void MallaInd::calcularNormalesTriangulos()
 
    // COMPLETAR: Práctica 4: creación de la tabla de normales de triángulos
    // ....
+   Tupla3f p,q,r,a,b;
+   for(int i = 0; i < triangulos.size(); i++){
+      p = vertices[triangulos[i](0)];
+      q = vertices[triangulos[i](1)];
+      r = vertices[triangulos[i](2)];
 
+      a = q-p;
+      b = r-p;
+
+      m = a.cross(b);
+      if (m.lengthSq()>0)
+         nor_tri.push_back(m.normalized());
+      else
+         nor_tri.push_back({0,0,0});
+   }
+   //DUDA
 }
 
 
@@ -63,7 +78,19 @@ void MallaInd::calcularNormales()
    // COMPLETAR: en la práctica 4: calculo de las normales de la malla
    // se debe invocar en primer lugar 'calcularNormalesTriangulos'
    // .......
+   calcularNormalesTriangulos();
 
+   nor_ver.insert(nor_ver.begin(), vertices.size(), {0.0, 0.0, 0.0});
+   for (int i = 0; i < triangulos.size(); i++){
+      nor_ver[triangulos[i](0)] += nor_tri[i];
+      nor_ver[triangulos[i](1)] += nor_tri[i];
+      nor_ver[triangulos[i](2)] += nor_tri[i];
+   }
+
+   for (int i = 0; i < vertices.size(); i++){
+      if (nor_ver[i].lengthSq()>0)
+         nor_ver[i] = nor_ver[i].normalized();
+   }
 
 }
 
@@ -163,7 +190,7 @@ MallaPLY::MallaPLY( const std::string & nombre_arch )
    // COMPLETAR: práctica 4: invocar  a 'calcularNormales' para el cálculo de normales
    // .................
 
-
+   calcularNormales(); //DUDA
 
 }
 
@@ -201,6 +228,7 @@ Cubo::Cubo()
    ponerColor({0.0, 0.0, 1.0});
 }
 
+
 Tetraedro::Tetraedro() : MallaInd("tetraedro"){
    
    vertices =
@@ -220,6 +248,7 @@ Tetraedro::Tetraedro() : MallaInd("tetraedro"){
    };
 
    ponerColor({0.0, 0.0, 1.0});
+   calcularNormales(); //DUDA
 }
 
 
@@ -263,71 +292,60 @@ CuboColores::CuboColores() : MallaInd("cubo colores"){
    
 }
 
-Casa::Casa() : MallaInd("casa"){
-   //Cubo * c = new Cubo();
-   vertices =
-      {  { -1.0, -1.0, -1.0 }, // 0
-         { -1.0, -1.0, +1.0 }, // 1
-         { -1.0, +1.0, -1.0 }, // 2
-         { -1.0, +1.0, +1.0 }, // 3
-         { +1.0, -1.0, -1.0 }, // 4
-         { +1.0, -1.0, +1.0 }, // 5
-         { +1.0, +1.0, -1.0 }, // 6
-         { +1.0, +1.0, +1.0 }, // 7
-      } ;
+Cubo24::Cubo24() : MallaInd("cubo de 24 vértices")
+{
+   vertices = {
+      {-1.0,-1.0,-1.0}, {-1.0,-1.0,1.0},
+      {1.0,-1.0,-1.0}, {1.0,-1.0,1.0},
+      
+      {-1.0,1.0,-1.0}, {-1.0,1.0,1.0},
+      {1.0,1.0,-1.0}, {1.0,1.0,1.0},
 
-  
+      {-1.0,1.0,1.0},{1.0,1.0,1.0},
+      {-1.0,-1.0,1.0},{1.0,-1.0,1.0},
 
-   triangulos =
-      {  {0,1,3}, {0,3,2}, // X-
-         {4,7,5}, {4,6,7}, // X+ (+4)
+      {-1.0,1.0,-1.0},{1.0,1.0,-1.0},
+      {-1.0,-1.0,-1.0},{1.0,-1.0,-1.0},
 
-        // Y-
-         {2,3,7}, {2,7,6}, // Y+ (+2)
+      {-1.0,1.0,-1.0},{-1.0,1.0,1.0},        
+      {-1.0,-1.0,-1.0},{-1.0,-1.0,1.0},
 
-         {0,6,4}, {0,2,6}, // Z-
-         {1,5,7}, {1,7,3}  // Z+ (+1)
-      } ;
+      {1.0,1.0,-1.0},{1.0,1.0,1.0},
+      {1.0,-1.0,-1.0},{1.0,-1.0,1.0} 
+   };
 
-   vertices.push_back({1,1.5,0});
-   triangulos.push_back({6,2,vertices.size()-1});
-   triangulos.push_back({7, vertices.size()+1, 6});
-   triangulos.push_back({7,2,vertices.size()-1});
-   triangulos.push_back({3,2,vertices.size()-1});
-   vertices.push_back({0-1,1.5,0});
-    triangulos.push_back({3,2,vertices.size()-1});
-     triangulos.push_back({3,vertices.size()-2,vertices.size()-1});
+    triangulos = {
+      {0,2,1},{3,1,2},
+      {4,5,6},{7,6,5},
+      {9,8,10},{9,10,11},
+      {13,14,12},{13,15,14},
+      {17,16,18},{17,18,19},
+      {21,20,22},{21,23,22}
+
+   };
 
 
-   for (int i = 0; i< vertices.size(); i++){
-      col_ver.push_back({vertices[i](0), vertices[i](1), vertices[i](2)});
-   }
-   //triangulos.erase(triangulos.begin(), triangulos.begin()+1);
-   //triangulos.erase(triangulos.begin());
-   //myvector.erase (myvector.begin()+5);
-}
+   cc_tt_ver = {
+      {0.0, 1.0},{0.0, 0.0},
+      {1.0,1.0},{1.0,0.0},
+      {0.0, 0.0},{0.0, 1.0},
+      {1.0,0.0},{1.0,1.0},
+      {0.0,0.0},{1.0,0.0},
+      {0.0,1.0},{1.0,1.0},
+      {1.0,0.0},{0.0,0.0},
+      {1.0,1.0},{0.0,1.0},
+      {0.0,0.0},{1.0,0.0},
+      {0.0,1.0},{1.0,1.0},
+      {1.0,0.0},{0.0,0.0},
+      {1.0,1.0},{0.0,1.0},
+   };   //DUDA
 
-
-RejillaY::RejillaY(unsigned n, unsigned m) : MallaInd("rejillay"){
-   assert(n > 1);
-   assert (m > 1);
-   float d_m = 1.0/m;
-   float d_n = 1.0/n;
-   for (double i = 0; i < n ; i++){
-      for (double j = 0; j < m ; j++){
-         vertices.push_back({i*d_n, j*d_m, 0.0});
-         col_ver.push_back({i*d_n, j*d_m, 0.0});
-      }
-   }
-
-   for (int i = 1; i < n*m; i++){
-      triangulos.push_back({i,i-n,i-1});
-   
-   }
-
-
+   calcularNormales();
 
 }
+
+
+
 // -----------------------------------------------------------------------------------------------
 
 

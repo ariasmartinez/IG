@@ -101,42 +101,12 @@ class NodoGrafoEscena : public Objeto3D
 
 } ;
 
-
-
-class GrafoCubos: public NodoGrafoEscena
-{
- protected:
- 
-  // matrices que le dan movimiento a mi objeto
-  Matriz4f * movi = nullptr;
-  
-  void actualizarEstadoParametro( const unsigned iParam, const float t_sec);
-
-
- public:
-
-  GrafoCubos();
-
-  unsigned leerNumParametros() const;
-
-  // animaciones propias  
-  void fijarMovimiento(const float t);
-  
- 
-};
-
-class CuboEscalado : public NodoGrafoEscena
+class NodoCubo24 : public NodoGrafoEscena
 {
    public:
-   CuboEscalado(Matriz4f * &movi);
+   NodoCubo24();
 };
 
-
-class Rej_esc : public NodoGrafoEscena
-{
-   public:
-   Rej_esc();
-};
 
 #endif // GRAFO_ESCENA_HPP
 
