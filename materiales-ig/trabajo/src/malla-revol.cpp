@@ -32,14 +32,63 @@ void MallaRevol::inicializar
 {
    // COMPLETAR: Práctica 2: completar: creación de la malla....
 
+   //calculamos normales
+
+
+   std::vector<Tupla3f> normalesAristas;
+   Tupla3f normal;
+   for(unsigned i = 0; i<perfil.size()-1; i++){
+
+      normal(0)= (perfil[i+1]-perfil[i])(1);
+      normal(1)=-(perfil[i+1]-perfil[i])(0);
+      normal(2)=0;
+      if(normal.lengthSq()>0)
+         normalesAristas.push_back(normal.normalized());
+      else
+         normalesAristas.push_back(normal);
+      
+   }
+
+   std::vector<Tupla3f> normalesVertices;
+   normalesVertices.push_back(normalesAristas[0]);
+
+   Tupla3f normal_v;
+   for (int i = 1; i < perfil.size()-1; i++){
+      normal_v = normalesAristas[i]+normalesAristas[i-1];
+      if(normal_v.lengthSq()>0)
+         normalesVertices.push_back(normal_v.normalized());
+      else
+         normalesVertices.push_back(normal_v);
+   }
+   normalesVertices.push_back(normalesAristas[normalesAristas.size()-2]);
+
+   //DUDA
+
+   std::vector<float> d, t;
+   float d_total = 0, float di, dj;
+   for (int i = 0; i < perfil.size()-1; i++){
+      di = sqrt((perfil[i+1]-perfil[i]).lengthSq())
+      d.push_back(di);
+      d_total+=di;
+   }
+
+   for (int i = 0; i < perfil.size(); i++){
+      dj = 0;
+      for (int j = 0; j < i; j++)
+         dj+= d[j];
+      t.push_back(dj/d_total);
+   }
+
    Tupla3f q;
    double angulo;
-   
+
    for (double i = 0; i < num_copias; i++){
       for (double j = 0; j < perfil.size(); j++){
          angulo = 2*i*180/(num_copias-1);
          q = MAT_Rotacion(angulo, {0,1,0})*perfil[j];
          vertices.push_back(q);
+         normalesVertice.push_back(normalesVertice[j]*MAT_Rotacion(angulo, {0,1,0}));
+         cc_tt_ver.push_back({float(i)/float(n-1),1.0-t[j]});
       }
    }
 
