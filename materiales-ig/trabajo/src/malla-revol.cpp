@@ -65,9 +65,10 @@ void MallaRevol::inicializar
    //DUDA
 
    std::vector<float> d, t;
-   float d_total = 0, float di, dj;
+   float d_total = 0;
+   float  di, dj;
    for (int i = 0; i < perfil.size()-1; i++){
-      di = sqrt((perfil[i+1]-perfil[i]).lengthSq())
+      di = sqrt((perfil[i+1]-perfil[i]).lengthSq());
       d.push_back(di);
       d_total+=di;
    }
@@ -87,8 +88,8 @@ void MallaRevol::inicializar
          angulo = 2*i*180/(num_copias-1);
          q = MAT_Rotacion(angulo, {0,1,0})*perfil[j];
          vertices.push_back(q);
-         normalesVertice.push_back(normalesVertice[j]*MAT_Rotacion(angulo, {0,1,0}));
-         cc_tt_ver.push_back({float(i)/float(n-1),1.0-t[j]});
+         normalesVertices.push_back(MAT_Rotacion(angulo, {0,1,0})*normalesVertices[j]);
+         cc_tt_ver.push_back({float(i)/float(perfil.size()-1),1.0-t[j]});
       }
    }
 

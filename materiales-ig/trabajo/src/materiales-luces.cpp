@@ -37,7 +37,7 @@ Textura::Textura( const std::string & nombreArchivoJPG )
    // COMPLETAR: práctica 4: cargar imagen de textura
    // (las variables de instancia están inicializadas en la decl. de la clase)
    // .....
-   imagen = leerArchivoJPG(nombreArchivoJPG, ancho, alto); //DUDA
+   imagen = LeerArchivoJPEG(nombreArchivoJPG.c_str(), ancho, alto); //DUDA : resuelto, poner c_str()
 }
 
 // ---------------------------------------------------------------------
@@ -218,11 +218,21 @@ void ColFuentesLuz::activar( Cauce & cauce )
    // .....
    std::vector<Tupla3f> color;
    std::vector<Tupla4f> pos_dir_wc;
-   for (int i = 0; i < vpf.size(); i++){
-      color.push_back(vpf[i].color);
-      pos_dir_wc.push_back(vpf[i].); //DUDA
+   //for (int i = 0; i < vpf.size(); i++){
+    //  color.push_back(vpf[i]->color);
+    //  pos_dir_wc.push_back(vpf[i].); //DUDA
+   //}
+   for(unsigned int i=0; i< vpf.size(); i++){
+      color.push_back(vpf[i]->color); //DUDA
+      Tupla4f ejeZ = {0.0,0.0,1.0,0.0};
+
+      ejeZ=MAT_Rotacion(vpf[i]->longi, 0.0, 1.0, 0.0) * ejeZ;
+      ejeZ=MAT_Rotacion(vpf[i]->lati, -1.0, 0.0, 0.0) * ejeZ;
+
+      pos_dir_wc.push_back(ejeZ);
    }
-   cauce->fijarFuentesLuz(color, pos_dir_wc);
+
+   cauce.fijarFuentesLuz(color, pos_dir_wc);
 }
 
 // ---------------------------------------------------------------------

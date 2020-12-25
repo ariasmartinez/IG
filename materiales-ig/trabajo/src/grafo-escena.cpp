@@ -113,7 +113,7 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
             if ( cv.iluminacion ){
             // y si está activada la iluminación
                cv.material_act = entradas[i].material ; // registrar material
-               cv.material_act->activar( cauce );
+               cv.material_act->activar( *cv.cauce_act );
                // activar material
             }
          break ;
@@ -123,8 +123,8 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
    cv.cauce_act->popMM();
 
    if ( material_pre != nullptr ){
-      cv.material_act = material_previo ;
-      cv.material_act->activar( cauce );
+      cv.material_act = material_pre ;
+      cv.material_act->activar( *cv.cauce_act );
    }
 
    // COMPLETAR: práctica 4: en la práctica 4, si 'cv.iluminacion' es 'true',

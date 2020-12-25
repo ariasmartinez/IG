@@ -476,6 +476,8 @@ void Inicializar( int argc, char *argv[] )
 
    escenas.push_back( new Escena3());
 
+   escenas.push_back( new Escena4());
+
 
 }
 

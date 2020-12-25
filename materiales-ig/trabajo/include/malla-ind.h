@@ -108,11 +108,6 @@ class CuboColores : public MallaInd
 };
 
 
-class Cubo24 : public Cubo24
-{
-   public:
-      Cubo24();
-};
 
 
 

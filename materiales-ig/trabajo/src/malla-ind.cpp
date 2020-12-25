@@ -51,7 +51,7 @@ void MallaInd::calcularNormalesTriangulos()
 
    // COMPLETAR: Práctica 4: creación de la tabla de normales de triángulos
    // ....
-   Tupla3f p,q,r,a,b;
+   Tupla3f p,q,r,a,b,m;
    for(int i = 0; i < triangulos.size(); i++){
       p = vertices[triangulos[i](0)];
       q = vertices[triangulos[i](1)];
@@ -82,9 +82,9 @@ void MallaInd::calcularNormales()
 
    nor_ver.insert(nor_ver.begin(), vertices.size(), {0.0, 0.0, 0.0});
    for (int i = 0; i < triangulos.size(); i++){
-      nor_ver[triangulos[i](0)] += nor_tri[i];
-      nor_ver[triangulos[i](1)] += nor_tri[i];
-      nor_ver[triangulos[i](2)] += nor_tri[i];
+      nor_ver[triangulos[i](0)] = nor_ver[triangulos[i](0)] + nor_tri[i];
+      nor_ver[triangulos[i](1)] = nor_ver[triangulos[i](1)] + nor_tri[i];
+      nor_ver[triangulos[i](2)] = nor_ver[triangulos[i](2)] + nor_tri[i];
    }
 
    for (int i = 0; i < vertices.size(); i++){
