@@ -212,13 +212,14 @@ Escena2::Escena2(){
     objetos.push_back(new MallaPLY("../recursos/plys/ant"));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/peon", 10));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/lata-pcue", 10));
-   objetos.push_back(new MallaRevolPLY("../recursos/plys/beethoven", 1000));
+   objetos.push_back(new MallaPLY("../recursos/plys/beethoven"));
+   objetos.push_back(new MallaPLY("../recursos/plys/big_dodge.ply"));
+  objetos.push_back(new MallaPLY("../recursos/plys/cow.ply"));
 
- 
    objetos.push_back( new Cilindro(20,50));
    objetos.push_back( new Cono(20,50));
    objetos.push_back( new Esfera(20,50));
-   objetos.push_back( new CilindroRelleno(20,500));
+   objetos.push_back( new CilindroRelleno(20,50));
 
    cout << "hecho." << endl << flush ;
 }
@@ -240,8 +241,8 @@ Escena3::Escena3(){
 
 Escena4::Escena4(){
   
-   objetos.push_back( new NodoCubo24());
-   objetos.push_back(new LataPeones());
+  objetos.push_back( new NodoCubo24());
+objetos.push_back(new LataPeones());
 }
 // ----------------------------------------------------------------------
 // COMPLETAR: Práctica 4

@@ -49,19 +49,32 @@ void MallaRevol::inicializar
       
    }
 
-   std::vector<Tupla3f> normalesVertices;
-   normalesVertices.push_back(normalesAristas[0]);
+  // std::vector<Tupla3f> normalesVertices;
+   nor_ver.push_back(normalesAristas[0]);
 
    Tupla3f normal_v;
    for (int i = 1; i < perfil.size()-1; i++){
       normal_v = normalesAristas[i]+normalesAristas[i-1];
       if(normal_v.lengthSq()>0)
-         normalesVertices.push_back(normal_v.normalized());
+         nor_ver.push_back(normal_v.normalized());
       else
-         normalesVertices.push_back(normal_v);
+         nor_ver.push_back(normal_v);
    }
-   normalesVertices.push_back(normalesAristas[normalesAristas.size()-2]);
+   nor_ver.push_back(normalesAristas[normalesAristas.size()-2]);
 
+
+   /*nor_ver.insert(nor_ver.begin(), perfil.size(), {0.0, 0.0 , 0.0});
+   if(normalesAristas[0].lengthSq()!=0)
+      nor_ver[0]=normalesAristas[0].normalized();
+   
+   for(unsigned i=1; i<perfil.size()-1; i++){
+      nor_ver[i]=normalesAristas[i]+normalesAristas[i-1];
+      if(nor_ver[i].lengthSq()!=0)
+         nor_ver[i]=nor_ver[i].normalized();
+   }
+
+   if(normalesAristas[perfil.size()-2].lengthSq()!=0)
+      nor_ver[perfil.size()-1]=normalesAristas[perfil.size()-2];*/
    //DUDA
 
    std::vector<float> d, t;
@@ -88,7 +101,7 @@ void MallaRevol::inicializar
          angulo = 2*i*180/(num_copias-1);
          q = MAT_Rotacion(angulo, {0,1,0})*perfil[j];
          vertices.push_back(q);
-         normalesVertices.push_back(MAT_Rotacion(angulo, {0,1,0})*normalesVertices[j]);
+         nor_ver.push_back(MAT_Rotacion(angulo, {0,1,0})*nor_ver[j]);
          cc_tt_ver.push_back({float(i)/float(perfil.size()-1),1.0-t[j]});
       }
    }
