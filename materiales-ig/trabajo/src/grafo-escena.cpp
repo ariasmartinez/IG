@@ -256,7 +256,7 @@ bool NodoGrafoEscena::buscarObjeto
 
 NodoCubo24::NodoCubo24(){
    Textura * tex = new Textura("../recursos/imgs/window-icon.jpg");
-   agregar( new Material(tex, 0.2, 0.4, 0.4, 20) ); //DUDA
+   agregar( new Material(tex, 0.8, 0.6, 0.5, 30) ); //DUDA
    agregar(new Cubo24());
 
    ponerNombre("Cubo 24 vértices");

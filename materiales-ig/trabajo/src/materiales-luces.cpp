@@ -50,6 +50,10 @@ void Textura::enviar()
    // y configurar parámetros de la textura (glTexParameter)
    // .......
   glGenTextures( 1, &ident_textura ); //crear ident de textura
+  glActiveTexture(GL_TEXTURE0);          //Activar identificador
+  glBindTexture(GL_TEXTURE_2D, ident_textura);    //Activar textura con el identificador indicado
+
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR ); //Parametros de textura
   gluBuild2DMipmaps(GL_TEXTURE_2D,
                       GL_RGB,                   // formato interno
                       ancho,                    // núm. de columnas (arbitrario) (GLsizei)
@@ -146,6 +150,8 @@ void Material::activar( Cauce & cauce )
    // .....
    if (textura != nullptr)
       textura->activar(cauce);
+   else 
+      cauce.fijarEvalText(false);
    //DUDA : cauce.fijarEvalText(false);
    cauce.fijarParamsMIL({k_amb, k_amb, k_amb}, {k_dif, k_dif, k_dif}, {k_pse, k_pse, k_pse}, exp_pse);
 

@@ -22,7 +22,7 @@ Escena::Escena()
    // COMPLETAR: Práctica 4: inicializar 'col_fuentes' y 'material_ini'
    // ...
    col_fuentes = new Col2Fuentes();
-   material_ini = new Material(0.4,0.7,0.2,10); //DUDA
+   material_ini = new Material(0.1,0.5,0.4,100); //DUDA
 
 
    // COMPLETAR: Práctica 5: hacer 'push_back' de varias camaras perspectiva u ortogonales,
@@ -116,6 +116,7 @@ void Escena::visualizarGL( ContextoVis & cv )
 
    objeto->visualizarGL(cv);
 
+   
    // si hay un FBO, dibujarlo (opcional...)
 
 }
@@ -238,8 +239,9 @@ Escena3::Escena3(){
 }
 
 Escena4::Escena4(){
-   objetos.push_back(new LataPeones());
+  
    objetos.push_back( new NodoCubo24());
+   objetos.push_back(new LataPeones());
 }
 // ----------------------------------------------------------------------
 // COMPLETAR: Práctica 4
