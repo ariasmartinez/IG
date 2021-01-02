@@ -6,15 +6,12 @@ class LataPeones : public NodoGrafoEscena{
     LataPeones();
 };
 
-class Lata : public NodoGrafoEscena{
+class LataCocaCola : public NodoGrafoEscena{
     public:
-    Lata();
+    LataCocaCola();
 };
 
-class LataCentral : public NodoGrafoEscena{
-    public:
-    LataCentral();
-};
+
 
 class LataTapaSup : public NodoGrafoEscena{
     public:
@@ -49,4 +46,19 @@ class Peones : public NodoGrafoEscena{
 class Peon : public NodoGrafoEscena{
     public:
     Peon();
+};
+
+class VariasLatasPeones : public NodoGrafoEscena{
+    public:
+    VariasLatasPeones();
+};
+
+class LataUGR : public NodoGrafoEscena{
+    public:
+    LataUGR();
+};
+
+class LataPepsi : public NodoGrafoEscena{
+    public:
+    LataPepsi();
 };

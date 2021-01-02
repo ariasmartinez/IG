@@ -19,12 +19,18 @@ bb8::bb8(){
 
    pm_traslacion = leerPtrMatriz(ind0);
 
+   ponerNombre("bb8");
+   ponerIdentificador(-1);
+
 }
 
 Cuerpo::Cuerpo(Matriz4f * &pm_alpha_rot_x,    Matriz4f * &pm_alpha_rot_y, Matriz4f * &pm_alpha_rot_z){
    unsigned ind1= agregar(MAT_Rotacion(0, {1,0,0}));
    unsigned ind2 = agregar(MAT_Rotacion(0, {0,1,0}));
    unsigned ind3 = agregar(MAT_Rotacion(0, {0,0,1}));
+
+      Textura * text = new Textura("./imgs/bb8-3D-model_600.jpg");
+    agregar( new Material(text, 0.6,0.3,0.7,100) ); //DUDA
 
    Esfera * esf = new Esfera(100, 200);
 

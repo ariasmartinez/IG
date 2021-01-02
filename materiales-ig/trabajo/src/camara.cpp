@@ -306,7 +306,11 @@ void Camara3Modos::desplRotarXY( const float da, const float db )
          // actualizar las dos primeras componentes (ángulos) de las coordenadas polares
          // actualizar las coordenadas cartesianas a partir de las polares
          // .....
+         
+         org_polares = org_polares + Tupla3f({da ,db,0.0});
+         org_cartesianas = Cartesianas(org_polares);
 
+         
          actualizarEjesMCV();
          break ;
       }
@@ -322,7 +326,19 @@ void Camara3Modos::desplRotarXY( const float da, const float db )
          // 5. actualizar los ejes del MCV (actualizarEjesMCV)
          // .....
 
+         org_polares = org_polares + Tupla3f({da ,db,0.0});
+         Tupla3f org_cartesianas_antiguas = org_cartesianas;
 
+         org_cartesianas  = Cartesianas(org_polares);
+         Tupla3f desplazamiento = org_cartesianas - org_cartesianas_antiguas;
+       
+         punto_atencion = punto_atencion - desplazamiento;
+
+         actualizarEjesMCV();
+
+         //DUDA
+
+         
          break ;
       }
       case ModoCam::prim_pers_despl :
@@ -332,6 +348,8 @@ void Camara3Modos::desplRotarXY( const float da, const float db )
          // 'db' unidades en el eje Y de la cámara.
          // .....
          // (nota: los ejes no cambian)
+
+         punto_atencion = punto_atencion + Tupla3f({da,db,0});//DUDA
 
          break ;
       }

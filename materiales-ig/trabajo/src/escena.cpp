@@ -22,12 +22,21 @@ Escena::Escena()
    // COMPLETAR: Práctica 4: inicializar 'col_fuentes' y 'material_ini'
    // ...
    col_fuentes = new Col2Fuentes();
-   material_ini = new Material(0.1,0.5,0.4,100); //DUDA
+   material_ini = new Material(0.5,0.8,1.5,60); //DUDA
 
 
    // COMPLETAR: Práctica 5: hacer 'push_back' de varias camaras perspectiva u ortogonales,
    // (sustituir la cámara orbital simple ('CamaraOrbitalSimple') por varias cámaras de 3 modos ('Camara3Modos')
-   camaras.push_back( new CamaraOrbitalSimple() );
+  // camaras.push_back( new CamaraOrbitalSimple() );
+  
+   camaras.push_back(new Camara3Modos(true, {5.0,5.0,5.0}, 1.0, {0.0,0.0,0.0}, 70.0));
+   camaras.push_back( new Camara3Modos(false, {-5.0,5.0,5.0}, 1.0, {0.0,0.0,0.0},60.0) );
+   camaras.push_back( new Camara3Modos(true, {5.0,5.0,-5.0}, 1.0, {0.0,0.0,0.0},80.0) );
+ 
+  camaras.push_back( new Camara3Modos(true, {6.0,6.0,6.0}, 1.0, {4.0,0.0,3.0},90.0) );
+   camaras.push_back( new Camara3Modos(false,{-6.0,6.0,6.0}, 1.0, {6.0,0.0,0.0},90.0) );
+   camaras.push_back( new Camara3Modos(true, {6.0,6.0,-6.0}, 1.5, {0.0,0.0,0.0},120.0) );
+
 
 }
 // -----------------------------------------------------------------------------------------------
@@ -249,7 +258,9 @@ objetos.push_back(new LataPeones());
 // Añadir la implementación del constructor de la clase Escena4 para construir
 // los objetos que se indican en los guiones de las práctica 4
 // .......
-
+Escena5::Escena5(){
+   objetos.push_back(new VariasLatasPeones());
+}
 
 
 // ----------------------------------------------------------------------
