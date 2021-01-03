@@ -14,6 +14,8 @@
 #include "malla-ind.h"   // declaración de 'ContextoVis'
 #include "lector-ply.h"
 
+//celia
+#include "seleccion.h"
 
 // *****************************************************************************
 // funciones auxiliares
@@ -127,14 +129,22 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    
    array_verts->fijarIndices( GL_UNSIGNED_INT, 3*triangulos.size(), triangulos.data());
 
-   
-   if (!col_ver.empty())
-      array_verts->fijarColores( GL_FLOAT, 3, col_ver.data());
-   if (!cc_tt_ver.empty())
-      array_verts->fijarCoordText( GL_FLOAT, 2, cc_tt_ver.data());
-   if (!nor_ver.empty())
-      array_verts->fijarNormales(GL_FLOAT, nor_ver.data());
-
+   if(cv.modo_seleccion){
+      //leer identificador del objeto
+      int iden = leerIdentificador();
+      if ( iden != -1)
+         FijarColVertsIdent(*cv.cauce_act, iden);
+      //si es distinto de -1 fijamos el color actual en el cauce usando
+      //el identificador 
+   }
+   else{
+      if (!col_ver.empty())
+         array_verts->fijarColores( GL_FLOAT, 3, col_ver.data());
+      if (!cc_tt_ver.empty())
+         array_verts->fijarCoordText( GL_FLOAT, 2, cc_tt_ver.data());
+      if (!nor_ver.empty())
+         array_verts->fijarNormales(GL_FLOAT, nor_ver.data());
+   }
   
    // COMPLETAR: práctica 1: visualizar según el modo (en 'cv.modo_envio')
    //   ** inmediato begin/end       : usar método 'visualizarGL_MI_BVE' de 'ArrayVerts'
@@ -226,6 +236,8 @@ Cubo::Cubo()
       } ;
 
    ponerColor({0.0, 0.0, 1.0});
+   ponerIdentificador(9);
+
 }
 
 
@@ -249,6 +261,8 @@ Tetraedro::Tetraedro() : MallaInd("tetraedro"){
 
    ponerColor({0.0, 0.0, 1.0});
    calcularNormales(); //DUDA
+   ponerIdentificador(8);
+
 }
 
 
@@ -289,7 +303,8 @@ CuboColores::CuboColores() : MallaInd("cubo colores"){
       { +1.0, +1.0, -1.0 }, // 6
       { +1.0, +1.0, +1.0 }, // 7
    };
-   
+   ponerIdentificador(7);
+
 }
 
 Cubo24::Cubo24() : MallaInd("cubo de 24 vértices")
@@ -341,6 +356,7 @@ Cubo24::Cubo24() : MallaInd("cubo de 24 vértices")
    };   //DUDA
 
    calcularNormales();
+   ponerIdentificador(6);
 
 }
 

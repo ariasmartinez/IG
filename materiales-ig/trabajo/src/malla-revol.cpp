@@ -154,7 +154,7 @@ Cilindro::Cilindro(const int num_verts_per, const unsigned nperfiles) : MallaRev
    
    inicializar(perfil, nperfiles);
    ponerNombre("Cilindro");
-   ponerIdentificador(-1);
+   ponerIdentificador(14);
    
 }
 
@@ -168,7 +168,7 @@ Cono::Cono(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
    }
    inicializar(perfil, nperfiles);
    ponerNombre("Cono");
-   ponerIdentificador(-1);
+   ponerIdentificador(13);
 }
 
 
@@ -187,7 +187,7 @@ Esfera::Esfera(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
    
    inicializar(perfil, nperfiles);
    ponerNombre("Esfera");
-   ponerIdentificador(-1);
+   ponerIdentificador(12);
 }
 
 CilindroRelleno::CilindroRelleno(const int num_verts_per, const unsigned nperfiles) : MallaRevol()
@@ -202,7 +202,7 @@ CilindroRelleno::CilindroRelleno(const int num_verts_per, const unsigned nperfil
    }
    inicializar(perfil, nperfiles);
    ponerNombre("Cilindro Relleno");
-   ponerIdentificador(-1);
+   ponerIdentificador(11);
 }
 
 
@@ -220,7 +220,7 @@ SemiEsfera::SemiEsfera(const int num_verts_per, const unsigned nperfiles): Malla
    
    inicializar(perfil, nperfiles);
    ponerNombre("SemiEsfera");
-   ponerIdentificador(-1);
+   ponerIdentificador(10);
 }
 
 void SemiEsfera::colorearSemiEsfera(){

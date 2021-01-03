@@ -69,6 +69,7 @@ class NodoGrafoEscena : public Objeto3D
    // COMPLETAR: práctica 3: definir variables y métodos privados del nodo
    // .......
       std::vector<EntradaNGE> entradas; // vector de entradas
+      bool centro_calculado = false; //celia
    public:
 
    NodoGrafoEscena() ;

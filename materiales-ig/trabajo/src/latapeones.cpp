@@ -14,7 +14,7 @@ LataCocaCola::LataCocaCola(){
    agregar(new MallaRevolPLY("../recursos/plys/lata-pcue.ply", 20));
   
    ponerNombre("LataCocaCola");
-   ponerIdentificador(-1);
+   ponerIdentificador(1);
 }
 
 
@@ -52,7 +52,7 @@ PeonMadera::PeonMadera(){
     agregar( new Material(tex, 0.8, 1.0, 1.0, 100) ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon Madera");
-    ponerIdentificador(-1);
+    ponerIdentificador(2);
 }
 
 PeonBlanco::PeonBlanco(){
@@ -61,7 +61,7 @@ PeonBlanco::PeonBlanco(){
     agregar( new Material(0.8, 1.0, 0.3, 100) ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon Blanco");
-    ponerIdentificador(-1);
+    ponerIdentificador(3);
 }
 
 PeonNegro::PeonNegro(){
@@ -70,7 +70,7 @@ PeonNegro::PeonNegro(){
     agregar( new Material(0.8, 0.3, 1.0, 100) ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon negro");
-    ponerIdentificador(-1);
+    ponerIdentificador(4);
 }
 
 
@@ -105,7 +105,7 @@ LataUGR::LataUGR(){
    agregar(new MallaRevolPLY("../recursos/plys/lata-pcue.ply", 20));
 
    ponerNombre("LataPepsi");
-   ponerIdentificador(-1);
+   ponerIdentificador(5);
 }
 
 LataPepsi::LataPepsi(){
@@ -119,5 +119,5 @@ LataPepsi::LataPepsi(){
    agregar(new MallaRevolPLY("../recursos/plys/lata-pcue.ply", 20));
    //ponerNombre("Cuerpo de la lata");
    ponerNombre("LataUGR");
-   ponerIdentificador(-1);
+   ponerIdentificador(6);
 }

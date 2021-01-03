@@ -25,6 +25,8 @@
 #include "grafo-escena.h"
 #include "malla-ind.h"
 
+//celia
+#include "seleccion.h"
 using namespace std ;
 
 // *********************************************************************
@@ -97,12 +99,19 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
       {
          case TipoEntNGE::objeto :
             
-            if (tieneColor()){
-               color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
+            color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
+            if(cv.modo_seleccion){
+               int iden = leerIdentificador();
+               if ( iden != -1)
+                  FijarColVertsIdent(*cv.cauce_act, iden);
+               //std::cout << "color: " << leerColor() << endl;
+            }
+            else if (tieneColor()){
+               //color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
                glColor3fv(leerColor()); //fijar color en el cauce leyendolo del objeto
             }
             entradas[i].objeto->visualizarGL(cv); //visualizamos
-            if (tieneColor())
+            if (tieneColor() || cv.modo_seleccion)
                glColor3fv(color);  //restaurar color del cauce 
             break;
 
@@ -110,7 +119,7 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
             cv.cauce_act->compMM(*(entradas[i].matriz)); 
             break;
          case TipoEntNGE::material : // si la entrada es de tipo ’material’
-            if ( cv.iluminacion ){
+            if ( cv.iluminacion && !cv.modo_seleccion){
             // y si está activada la iluminación
                cv.material_act = entradas[i].material ; // registrar material
                cv.material_act->activar( *cv.cauce_act );
@@ -218,7 +227,24 @@ void NodoGrafoEscena::calcularCentroOC()
    //    en coordenadas de objeto (hay que hacerlo recursivamente)
    //   (si el centro ya ha sido calculado, no volver a hacerlo)
    // ........
-
+   if (!centro_calculado){
+      Matriz4f mat = MAT_Ident();
+      Tupla3f centro_promedio = {0,0,0};
+      //Tupla3f centro_obj;
+      float num_centros = 0;
+      for (unsigned i=0; i<entradas.size(); i++){
+         if ( entradas[i].tipo == TipoEntNGE::objeto){
+           entradas[i].objeto->calcularCentroOC();
+           centro_promedio = centro_promedio + mat*leerCentroOC();
+           num_centros++;
+         }
+         else if (entradas[i].tipo == TipoEntNGE::transformacion)
+            mat = mat * (*entradas[i].matriz) ;
+      }
+      centro_promedio = centro_promedio / num_centros;
+      ponerCentroOC(centro_promedio);
+   }
+   centro_calculado = true;
 }
 // -----------------------------------------------------------------------------
 // método para buscar un objeto con un identificador y devolver un puntero al mismo
@@ -238,19 +264,35 @@ bool NodoGrafoEscena::buscarObjeto
 
    // 1. calcula el centro del objeto, (solo la primera vez)
    // ........
-
+   calcularCentroOC();
 
    // 2. si el identificador del nodo es el que se busca, ya está (terminar)
    // ........
+   if(ident_busc == leerIdentificador()){
+      centro_wc = mmodelado*leerCentroOC();
+      if ( objeto == nullptr ) {
+        cout << "\t Identificador encontrado con puntero asociado nulo" << endl;
+      }
+      *objeto = this ;
+      return true;
+   }
 
 
    // 3. El nodo no es el buscado: buscar recursivamente en los hijos
    //    (si alguna llamada para un sub-árbol lo encuentra, terminar y devolver 'true')
    // ........
 
+   Matriz4f mat = mmodelado;
 
+   bool encontrado = false;
+   for (unsigned i=0; i<entradas.size() && !encontrado; i++) {
+      if ( entradas[i].tipo == TipoEntNGE::objeto) 
+         encontrado =  entradas[i].objeto->buscarObjeto(ident_busc, mat, objeto, centro_wc );
+      else if (entradas[i].tipo == TipoEntNGE::transformacion)
+         mat = mat * (*entradas[i].matriz) ;
+   }
    // ni este nodo ni ningún hijo es el buscado: terminar
-   return false ;
+   return encontrado ;
 }
 
 
@@ -260,5 +302,7 @@ NodoCubo24::NodoCubo24(){
    agregar(new Cubo24());
 
    ponerNombre("Cubo 24 vértices");
+   ponerIdentificador(15);
+
 }
 

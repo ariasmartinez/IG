@@ -11,7 +11,7 @@ bb8::bb8(){
    unsigned ind0 = agregar(MAT_Traslacion(0,0,0));
    agregar (new Cuerpo(pm_alpha_rot_y, pm_alpha_rot_x, pm_alpha_rot_z));
 
-         
+   agregar( MAT_Rotacion(-90, {1,0,0}));  
    agregar( MAT_Traslacion(0,0,0.95));
    agregar( MAT_Escalado(0.57,0.57,0.57));
    agregar(new Cabeza(pm_beta_rot_cab, pm_mov_ojo, pm_mov_cab));
@@ -20,7 +20,7 @@ bb8::bb8(){
    pm_traslacion = leerPtrMatriz(ind0);
 
    ponerNombre("bb8");
-   ponerIdentificador(-1);
+   ponerIdentificador(16);
 
 }
 
@@ -30,7 +30,7 @@ Cuerpo::Cuerpo(Matriz4f * &pm_alpha_rot_x,    Matriz4f * &pm_alpha_rot_y, Matriz
    unsigned ind3 = agregar(MAT_Rotacion(0, {0,0,1}));
 
       Textura * text = new Textura("./imgs/bb8-3D-model_600.jpg");
-    agregar( new Material(text, 0.6,0.3,0.7,100) ); //DUDA
+    //agregar( new Material(text, 0.6,0.3,0.7,100) ); //DUDA
 
    Esfera * esf = new Esfera(100, 200);
 
@@ -146,7 +146,7 @@ void bb8::fijarBetaRotCab(const float nuevo_valor){
 
 
 void bb8::fijarTraslacion(const float nuevo_valor){
-   * pm_traslacion = MAT_Traslacion(2*sin(nuevo_valor), 2*cos(2*nuevo_valor),0);
+   * pm_traslacion = MAT_Traslacion(2*sin(nuevo_valor),0 ,2*cos(2*nuevo_valor));
 }
 
 void bb8::fijarMovimientoOjo(const float nuevo_valor){

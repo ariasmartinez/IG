@@ -22,7 +22,11 @@ void FijarColVertsIdent( Cauce & cauce, const int ident )  // 0 ≤ ident < 2^24
 {
    // COMPLETAR: práctica 5: fijar color actual de OpenGL usando 'ident' (glColor3ub)
    // .....
-
+   const unsigned char
+      byteR = (ident) % 0x100U,  //rojo = byte menos significativo
+      byteG = (ident / 0x100U) % 0x100U,  // verde = byte intermedio
+      byteB = (ident / 0x1000U) % 0x100U;  // azul = byte más significativo
+   glColor3ub(byteR, byteG, byteB);  // cambio de color en OpenGL.
 }
 
 // ----------------------------------------------------------------------------------
@@ -34,8 +38,12 @@ int LeerIdentEnPixel( int xpix, int ypix )
    // COMPLETAR: práctica 5: leer el identificador codificado en el color del pixel (x,y)
    // .....(sustituir el 'return 0' por lo que corresponda)
    // .....
-
-   return 0 ;
+   unsigned char bytes[3];
+   //leer los 3 bytes del frame-buffer
+   glReadPixels(xpix, ypix, 1,1, GL_RGB, GL_UNSIGNED_BYTE, (void *)bytes);
+   //reconstruir el indentificador y devolverlo
+   return bytes[0] + (0x100U*bytes[1]) + (0x10000U*bytes[2]);
+   
 
 }
 
