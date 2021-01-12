@@ -48,8 +48,10 @@ void MallaRevol::inicializar
          normalesAristas.push_back(normal);
       
    }
+  
 
   // std::vector<Tupla3f> normalesVertices;
+  /*
    nor_ver.push_back(normalesAristas[0]);
 
    Tupla3f normal_v;
@@ -61,9 +63,9 @@ void MallaRevol::inicializar
          nor_ver.push_back(normal_v);
    }
    nor_ver.push_back(normalesAristas[normalesAristas.size()-2]);
+*/
 
-
-   /*nor_ver.insert(nor_ver.begin(), perfil.size(), {0.0, 0.0 , 0.0});
+   nor_ver.insert(nor_ver.begin(), perfil.size(), {0.0, 0.0 , 0.0});
    if(normalesAristas[0].lengthSq()!=0)
       nor_ver[0]=normalesAristas[0].normalized();
    
@@ -74,30 +76,28 @@ void MallaRevol::inicializar
    }
 
    if(normalesAristas[perfil.size()-2].lengthSq()!=0)
-      nor_ver[perfil.size()-1]=normalesAristas[perfil.size()-2];*/
+      nor_ver[perfil.size()-1]=normalesAristas[perfil.size()-2];
    //DUDA
 
    std::vector<float> d, t;
    float d_total = 0;
    float  di, dj;
-   for (int i = 0; i < perfil.size()-1; i++){
+   for (unsigned int i = 0; i < perfil.size()-1; i++){
       di = sqrt((perfil[i+1]-perfil[i]).lengthSq());
       d.push_back(di);
       d_total+=di;
    }
 
-   for (int i = 0; i < perfil.size(); i++){
-      dj = 0;
-      for (int j = 0; j < i; j++)
-         dj+= d[j];
-      t.push_back(dj/d_total);
-   }
+   t.push_back(0);
+    for(unsigned int i = 1; i<perfil.size(); i++)
+      t.push_back(t[i-1]+d[i-1]/d_total);
+
 
    Tupla3f q;
    double angulo;
-
-   for (double i = 0; i < num_copias; i++){
-      for (double j = 0; j < perfil.size(); j++){
+ //cambio perfil.size() por perfil -1
+   for (unsigned  i = 0; i < num_copias; i++){
+      for (unsigned j = 0; j < perfil.size(); j++){
          angulo = 2*i*180/(num_copias-1);
          q = MAT_Rotacion(angulo, {0,1,0})*perfil[j];
          vertices.push_back(q);

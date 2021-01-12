@@ -14,8 +14,7 @@
 #include "malla-ind.h"   // declaración de 'ContextoVis'
 #include "lector-ply.h"
 
-//celia
-#include "seleccion.h"
+
 
 // *****************************************************************************
 // funciones auxiliares
@@ -26,6 +25,7 @@
 MallaInd::MallaInd()
 {
    // nombre por defecto
+  
    ponerNombre("malla indexada, anónima");
 }
 // -----------------------------------------------------------------------------
@@ -36,6 +36,30 @@ MallaInd::MallaInd( const std::string & nombreIni )
    ponerNombre(nombreIni) ;
 }
 
+
+void MallaInd::visualizarNormales()
+{
+   using namespace std ;
+
+   if (nor_ver.size() == 0 )
+   {
+      cout << "Advertencia: intentando dibujar normales de una malla que no tiene tabla (" << leerNombre() << ")." << endl ;
+      return ;
+   }
+   if ( array_verts_normales == nullptr )
+   {
+      for( unsigned i = 0 ; i < vertices.size() ; i++ )
+      {
+         segmentos_normales.push_back( vertices[i] );
+         segmentos_normales.push_back( vertices[i]+ 0.35f*(nor_ver[i]) );
+      }
+      array_verts_normales = new ArrayVertices( GL_FLOAT, 3, segmentos_normales.size(), segmentos_normales.data() );
+   }
+
+   array_verts_normales->visualizarGL_MI_DAE( GL_LINES );
+   CError();
+}
+
 //-----------------------------------------------------------------------------
 // calcula la tabla de normales de triángulos una sola vez, si no estaba calculada
 
@@ -44,9 +68,12 @@ void MallaInd::calcularNormalesTriangulos()
 
    // si ya está creada la tabla de normales de triángulos, no es necesario volver a crearla
    const unsigned nt = triangulos.size() ;
+    
    assert( 1 <= nt );
+    
    if ( 0 < nor_tri.size() )
    {
+      
       assert( nt == nor_tri.size() );
       return ;
    }
@@ -54,7 +81,7 @@ void MallaInd::calcularNormalesTriangulos()
    // COMPLETAR: Práctica 4: creación de la tabla de normales de triángulos
    // ....
    Tupla3f p,q,r,a,b,m;
-   for(int i = 0; i < triangulos.size(); i++){
+   for(unsigned int i = 0; i < triangulos.size(); i++){
       p = vertices[triangulos[i](0)];
       q = vertices[triangulos[i](1)];
       r = vertices[triangulos[i](2)];
@@ -69,6 +96,7 @@ void MallaInd::calcularNormalesTriangulos()
          nor_tri.push_back({0,0,0});
    }
    //DUDA
+   CError();
 }
 
 
@@ -83,17 +111,17 @@ void MallaInd::calcularNormales()
    calcularNormalesTriangulos();
 
    nor_ver.insert(nor_ver.begin(), vertices.size(), {0.0, 0.0, 0.0});
-   for (int i = 0; i < triangulos.size(); i++){
+   for (unsigned int i = 0; i < triangulos.size(); i++){
       nor_ver[triangulos[i](0)] = nor_ver[triangulos[i](0)] + nor_tri[i];
       nor_ver[triangulos[i](1)] = nor_ver[triangulos[i](1)] + nor_tri[i];
       nor_ver[triangulos[i](2)] = nor_ver[triangulos[i](2)] + nor_tri[i];
    }
 
-   for (int i = 0; i < vertices.size(); i++){
+   for (unsigned int i = 0; i < vertices.size(); i++){
       if (nor_ver[i].lengthSq()>0)
          nor_ver[i] = nor_ver[i].normalized();
    }
-
+   CError();
 }
 
 
@@ -106,6 +134,7 @@ void MallaInd::visualizarGL( ContextoVis & cv )
 {
 
    using namespace std ;
+    
    assert( cv.cauce_act != nullptr );
 
    if ( triangulos.size() == 0 || vertices.size() == 0 )
@@ -116,19 +145,27 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    // guardar el color previamente fijado
    const Tupla4f color_previo = leerFijarColVertsCauce( cv );
 
+
+     //Visualizamos normales si procede
+   if(cv.visualizando_normales){
+     visualizarNormales();
+     return;
+   }
+
+
    // COMPLETAR: práctica 1: si el puntero 'array_verts' es nulo, crear el objeto ArrayVerts
    //   * en el constructor se dan los datos de la tabla de coordenadas de vértices (tabla 'vertices')
    //   * después hay que invocar a 'fijarIndices', usando el formato y datos de la tabla de triángulos ('triangulos')
    //   * si las tablas 'col_ver', 'cc_tt_ver' o 'nor_ver' no están vacías, hay que invocar los métodos 
    //     'fijarColores', 'fijarCoordText' y 'fijarNormales', como corresponda.
+     
+
 
   
-   if (array_verts == nullptr)
+   if (array_verts == nullptr){
       array_verts = new ArrayVertices( GL_FLOAT, 3, vertices.size(), vertices.data());
-   
-   
-   array_verts->fijarIndices( GL_UNSIGNED_INT, 3*triangulos.size(), triangulos.data());
-
+      array_verts->fijarIndices( GL_UNSIGNED_INT, 3*triangulos.size(), triangulos.data());
+   }
    
       if (!col_ver.empty())
          array_verts->fijarColores( GL_FLOAT, 3, col_ver.data());

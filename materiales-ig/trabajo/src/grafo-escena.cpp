@@ -87,12 +87,14 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
 {
    // COMPLETAR: práctica 3: recorrer las entradas y visualizar cada nodo.
    // ........
+   cv.cauce_act->pushMM();
    
    Material * material_pre = cv.iluminacion ? cv.material_act : nullptr;
    
-   cv.cauce_act->pushMM();
-      const Tupla4f color_previo = leerFijarColVertsCauce( cv );
-   Tupla4f color;
+   
+
+   const Tupla4f color_previo = leerFijarColVertsCauce( cv );
+   
 
    for (unsigned i = 0; i < entradas.size(); i++)
       switch( entradas[i].tipo)
@@ -121,16 +123,23 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
                // activar material
             }
          break ;
+         default:
+            cout << "Error" << endl;
+            exit(-1);
+         break;
       }
    
+   glColor3fv(color_previo); 
 
-   cv.cauce_act->popMM();
+  
 
    if ( material_pre != nullptr ){
       cv.material_act = material_pre ;
       cv.material_act->activar( *cv.cauce_act );
    }
-   glColor3fv(color_previo); 
+
+    cv.cauce_act->popMM();
+   
    // COMPLETAR: práctica 4: en la práctica 4, si 'cv.iluminacion' es 'true',
    // se deben de gestionar los materiales:
    //   1. guardar puntero al material activo al inicio (está en cv.material_act)
@@ -203,6 +212,7 @@ Matriz4f * NodoGrafoEscena::leerPtrMatriz( unsigned indice )
    // COMPLETAR: práctica 3: devolver puntero la matriz en ese índice
    //   (debe de dar error y abortar si no hay una matriz en esa entrada)
    // ........(sustituir 'return nullptr' por lo que corresponda)
+   
    assert(indice < entradas.size());
    assert(entradas[indice].tipo == TipoEntNGE::transformacion);
    assert(entradas[indice].matriz != nullptr);
@@ -252,6 +262,7 @@ bool NodoGrafoEscena::buscarObjeto
    Tupla3f &         centro_wc   // (salida) centro del objeto en coordenadas del mundo
 )
 {
+   
    assert( 0 < ident_busc );
 
    // COMPLETAR: práctica 5: buscar un sub-objeto con un identificador

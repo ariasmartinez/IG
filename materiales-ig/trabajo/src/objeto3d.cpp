@@ -86,6 +86,10 @@ Tupla4f Objeto3D::leerFijarColVertsCauce( ContextoVis & cv )
 
    // leer color previo
    Tupla4f color_previo = cv.cauce_act->leerColorActual();
+   //si visualizamos normales
+    if ( cv.visualizando_normales )
+      return color_previo ;
+
 
    if ( cv.modo_seleccion )
    {

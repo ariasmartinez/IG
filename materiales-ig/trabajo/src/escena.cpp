@@ -119,6 +119,10 @@ void Escena::visualizarGL( ContextoVis & cv )
    // recuperar el objeto actual de esta escena
    Objeto3D * objeto = objetos[ind_objeto_actual] ; assert( objeto != nullptr );
 
+    //Visualizamos las normales si procede
+   if ( cv.visualizar_normales && !cv.modo_seleccion )
+      visualizarNormales( cv );
+
    // COMPLETAR: Práctica 1: visualizar el objeto actual ('objeto')
 
    objeto->visualizarGL(cv);
@@ -128,6 +132,31 @@ void Escena::visualizarGL( ContextoVis & cv )
 
 }
 
+void Escena::visualizarNormales( ContextoVis & cv )
+{
+   // recuperar el objeto raiz de esta escena y comprobar que está ok.
+   bool ilum_ant = cv.iluminacion ;
+   assert( cv.cauce_act != nullptr );
+   Objeto3D * objeto = objetos[ind_objeto_actual] ; assert( objeto != nullptr );
+
+   // configurar el cauce:
+   cv.cauce_act->fijarEvalMIL( false );
+   cv.cauce_act->fijarEvalText( false );
+   cv.cauce_act->fijarModoSombrPlano( true ); // sombreado plano
+   glLineWidth( 1.5 ); // ancho de líneas (se queda puesto así)
+   glColor4f( 1.0, 0.7, 0.4, 1.0 ); // color de las normales
+
+   // configurar el contexto de visualizacion
+   cv.visualizando_normales = true ;   // hace que MallaInd::visualizarGL visualize las normales.
+   cv.iluminacion           = false ;
+
+   // visualizar objeto actual
+   objetos[ind_objeto_actual]->visualizarGL( cv );
+
+   // restaurar atributos cambiados en el contexto de visualización
+   cv.visualizando_normales = false ;
+   cv.iluminacion = ilum_ant ;
+}
 
 
 
@@ -216,7 +245,7 @@ Escena2::Escena2(){
    using namespace std;
    cout << "Creando objetos de escena 2..." << flush;
   
-    objetos.push_back(new MallaPLY("../recursos/plys/ant"));
+   objetos.push_back(new MallaPLY("../recursos/plys/ant"));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/peon", 10));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/lata-pcue", 10));
    objetos.push_back(new MallaPLY("../recursos/plys/beethoven"));
@@ -247,9 +276,11 @@ Escena3::Escena3(){
 }
 
 Escena4::Escena4(){
-  
+  using namespace std;
+  cout << "Creando objetos de escena 4..." << flush;
   objetos.push_back( new NodoCubo24());
-objetos.push_back(new LataPeones());
+  objetos.push_back(new LataPeones());
+  cout << "hecho" << endl << flush;
 }
 // ----------------------------------------------------------------------
 // COMPLETAR: Práctica 4
@@ -257,7 +288,10 @@ objetos.push_back(new LataPeones());
 // los objetos que se indican en los guiones de las práctica 4
 // .......
 Escena5::Escena5(){
+   using namespace std;
+   cout << "Creando objetos de escena 5..." << flush;
    objetos.push_back(new VariasLatasPeones());
+   cout << "hecho" << endl << flush;
 }
 
 
