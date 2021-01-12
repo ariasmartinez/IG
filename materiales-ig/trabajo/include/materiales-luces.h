@@ -252,4 +252,11 @@ class Col2Fuentes : public ColFuentesLuz
 } ;
 
 
+
+class TexturaPeon : public Textura
+{
+   public:
+    TexturaPeon(const std::string & nombreArchivoJPG);
+};
+
 #endif

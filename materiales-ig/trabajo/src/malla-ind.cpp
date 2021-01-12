@@ -129,22 +129,14 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    
    array_verts->fijarIndices( GL_UNSIGNED_INT, 3*triangulos.size(), triangulos.data());
 
-   if(cv.modo_seleccion){
-      //leer identificador del objeto
-      int iden = leerIdentificador();
-      if ( iden != -1)
-         FijarColVertsIdent(*cv.cauce_act, iden);
-      //si es distinto de -1 fijamos el color actual en el cauce usando
-      //el identificador 
-   }
-   else{
+   
       if (!col_ver.empty())
          array_verts->fijarColores( GL_FLOAT, 3, col_ver.data());
       if (!cc_tt_ver.empty())
          array_verts->fijarCoordText( GL_FLOAT, 2, cc_tt_ver.data());
       if (!nor_ver.empty())
          array_verts->fijarNormales(GL_FLOAT, nor_ver.data());
-   }
+  
   
    // COMPLETAR: práctica 1: visualizar según el modo (en 'cv.modo_envio')
    //   ** inmediato begin/end       : usar método 'visualizarGL_MI_BVE' de 'ArrayVerts'

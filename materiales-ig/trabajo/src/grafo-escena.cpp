@@ -91,7 +91,7 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
    Material * material_pre = cv.iluminacion ? cv.material_act : nullptr;
    
    cv.cauce_act->pushMM();
-
+      const Tupla4f color_previo = leerFijarColVertsCauce( cv );
    Tupla4f color;
 
    for (unsigned i = 0; i < entradas.size(); i++)
@@ -99,20 +99,15 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
       {
          case TipoEntNGE::objeto :
             
-            color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
-            if(cv.modo_seleccion){
-               int iden = leerIdentificador();
-               if ( iden != -1)
-                  FijarColVertsIdent(*cv.cauce_act, iden);
-               //std::cout << "color: " << leerColor() << endl;
-            }
-            else if (tieneColor()){
+            //color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
+            
+            //if (tieneColor()){
                //color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
-               glColor3fv(leerColor()); //fijar color en el cauce leyendolo del objeto
-            }
+              // glColor3fv(leerColor()); //fijar color en el cauce leyendolo del objeto
+            //}
             entradas[i].objeto->visualizarGL(cv); //visualizamos
-            if (tieneColor() || cv.modo_seleccion)
-               glColor3fv(color);  //restaurar color del cauce 
+            //if (tieneColor())
+              // glColor3fv(color);  //restaurar color del cauce 
             break;
 
          case TipoEntNGE::transformacion:
@@ -135,7 +130,7 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
       cv.material_act = material_pre ;
       cv.material_act->activar( *cv.cauce_act );
    }
-
+   glColor3fv(color_previo); 
    // COMPLETAR: práctica 4: en la práctica 4, si 'cv.iluminacion' es 'true',
    // se deben de gestionar los materiales:
    //   1. guardar puntero al material activo al inicio (está en cv.material_act)

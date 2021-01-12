@@ -21,14 +21,14 @@ LataCocaCola::LataCocaCola(){
 
 LataTapaSup::LataTapaSup(){
   
-    agregar( new Material(0.6,0.6,1.0,100)  ); //DUDA
+    agregar( new Material(0.6,0.6,1.0,30)  ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/lata-psup.ply", 20));
     ponerNombre("Tapa superior de la lata");
     ponerIdentificador(-1);
 }
 
 LataTapaInf::LataTapaInf(){
-    agregar( new Material(0.6,0.6,1.0,100) ); //DUDA
+    agregar( new Material(0.6,0.6,1.0,30) ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/lata-pinf.ply", 20));
     ponerNombre("Tapa inferior de la lata");
     ponerIdentificador(-1);
@@ -48,8 +48,9 @@ Peones::Peones(){
 }
 
 PeonMadera::PeonMadera(){
-    Textura * tex = new Textura("../recursos/imgs/text-madera.jpg");
-    agregar( new Material(tex, 0.8, 1.0, 1.0, 100) ); //DUDA
+    TexturaPeon * tex = new TexturaPeon("../recursos/imgs/text-madera.jpg");
+    //Textura * tex = new Textura("../recursos/imgs/text-madera.jpg");
+    agregar( new Material(tex, 0.1, 0.7, 1.0, 100) ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon Madera");
     ponerIdentificador(2);
@@ -58,7 +59,7 @@ PeonMadera::PeonMadera(){
 PeonBlanco::PeonBlanco(){
      ponerColor({1.0,1.0,1.0});
   
-    agregar( new Material(0.8, 1.0, 0.3, 100) ); //DUDA
+    agregar( new Material(0.1, 0.8, 0.0, 100) ); //DUDA
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon Blanco");
     ponerIdentificador(3);

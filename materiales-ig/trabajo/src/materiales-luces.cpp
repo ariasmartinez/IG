@@ -326,3 +326,8 @@ Col2Fuentes::Col2Fuentes()
    insertar( new FuenteLuz( -70.0, -30.0, Tupla3f { f1, f1*0.5, f1*0.5 } ) );
 
 }
+
+
+TexturaPeon::TexturaPeon(const std::string & nombreArchivoJPG) : Textura(nombreArchivoJPG){ 
+   modo_gen_ct = ModoGenCT::mgct_coords_objeto;
+}
