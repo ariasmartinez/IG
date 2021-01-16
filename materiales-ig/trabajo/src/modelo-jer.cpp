@@ -20,7 +20,7 @@ bb8::bb8(){
    pm_traslacion = leerPtrMatriz(ind0);
 
    ponerNombre("bb8");
-   ponerIdentificador(16);
+   ponerIdentificador(18);
 
 }
 
