@@ -101,7 +101,8 @@ void MallaRevol::inicializar
          angulo = 2*i*180/(num_copias-1);
          q = MAT_Rotacion(angulo, {0,1,0})*perfil[j];
          vertices.push_back(q);
-         nor_ver.push_back(MAT_Rotacion(angulo, {0,1,0})*nor_ver[j]);
+         if (i != 0)
+            nor_ver.push_back(MAT_Rotacion(angulo, {0,1,0})*nor_ver[j]);
          cc_tt_ver.push_back({float(i)/float(perfil.size()-1),1.0-t[j]});
       }
    }

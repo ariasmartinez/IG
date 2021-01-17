@@ -108,18 +108,20 @@ void MallaInd::calcularNormales()
    // COMPLETAR: en la práctica 4: calculo de las normales de la malla
    // se debe invocar en primer lugar 'calcularNormalesTriangulos'
    // .......
-   calcularNormalesTriangulos();
+   if(nor_ver.size() == 0){
+      calcularNormalesTriangulos();
 
-   nor_ver.insert(nor_ver.begin(), vertices.size(), {0.0, 0.0, 0.0});
-   for (unsigned int i = 0; i < triangulos.size(); i++){
-      nor_ver[triangulos[i](0)] = nor_ver[triangulos[i](0)] + nor_tri[i];
-      nor_ver[triangulos[i](1)] = nor_ver[triangulos[i](1)] + nor_tri[i];
-      nor_ver[triangulos[i](2)] = nor_ver[triangulos[i](2)] + nor_tri[i];
-   }
+      nor_ver.insert(nor_ver.begin(), vertices.size(), {0.0, 0.0, 0.0});
+      for (unsigned int i = 0; i < triangulos.size(); i++){
+         nor_ver[triangulos[i](0)] = nor_ver[triangulos[i](0)] + nor_tri[i];
+         nor_ver[triangulos[i](1)] = nor_ver[triangulos[i](1)] + nor_tri[i];
+         nor_ver[triangulos[i](2)] = nor_ver[triangulos[i](2)] + nor_tri[i];
+      }
 
-   for (unsigned int i = 0; i < vertices.size(); i++){
-      if (nor_ver[i].lengthSq()>0)
-         nor_ver[i] = nor_ver[i].normalized();
+      for (unsigned int i = 0; i < vertices.size(); i++){
+         if (nor_ver[i].lengthSq()>0)
+            nor_ver[i] = nor_ver[i].normalized();
+      }
    }
    CError();
 }
