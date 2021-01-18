@@ -167,7 +167,7 @@ void MallaInd::visualizarGL( ContextoVis & cv )
    if (array_verts == nullptr){
       array_verts = new ArrayVertices( GL_FLOAT, 3, vertices.size(), vertices.data());
       array_verts->fijarIndices( GL_UNSIGNED_INT, 3*triangulos.size(), triangulos.data());
-   }
+   
    
       if (!col_ver.empty())
          array_verts->fijarColores( GL_FLOAT, 3, col_ver.data());
@@ -176,7 +176,7 @@ void MallaInd::visualizarGL( ContextoVis & cv )
       if (!nor_ver.empty())
          array_verts->fijarNormales(GL_FLOAT, nor_ver.data());
   
-  
+   }
    // COMPLETAR: práctica 1: visualizar según el modo (en 'cv.modo_envio')
    //   ** inmediato begin/end       : usar método 'visualizarGL_MI_BVE' de 'ArrayVerts'
    //   ** inmediato con una llamada : usar método 'visualizarGL_MI_DAE' de 'ArrayVerts'
