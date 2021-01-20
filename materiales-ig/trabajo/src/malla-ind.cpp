@@ -391,6 +391,188 @@ Cubo24::Cubo24() : MallaInd("cubo de 24 vértices")
 
 }
 
+CilindroNuevo::CilindroNuevo() :  MallaInd( "CilindroT" ) {
+float n=50;
+  float x,z,w; //Angulo y coordenadas
+  float radio=0.5;
+
+  for(unsigned i=0; i<2*n+1; i++){
+    w=2*M_PI/n *i;
+
+    x=radio*cos(w);
+    z=radio*sin(w);
+
+    vertices.push_back({x,0.0,z});
+    vertices.push_back({x,1.0,z});
+    col_ver.push_back({1.0,1.0,1.0});
+    col_ver.push_back({1.0,1.0,1.0});
+
+  }
+
+
+
+  for(unsigned i=0; i<vertices.size()-2; i++){
+    if(i%2==0)
+      triangulos.push_back({i,i+1,i+2});
+    else
+      triangulos.push_back({i,i+2,i+1});
+  }
+
+   //AÑADO COORDENADAS DE TEXTURA
+
+   
+   for(unsigned i=0; i<vertices.size()/2; i++){
+    cc_tt_ver.push_back({float(i)/float(n),1.0});
+    cc_tt_ver.push_back({float(i)/float(n),0.0});
+  }
+
+  
+
+
+   calcularNormales();
+}
+
+
+//cilindro con la textura dos veces
+
+CilindroNuevoDoble::CilindroNuevoDoble() :  MallaInd( "CilindroT" ) {
+float n=50;
+  float x,z,w; //Angulo y coordenadas
+  float radio=0.5;
+
+  for(unsigned i=0; i<2*n+1; i++){
+    w=2*M_PI/n *i;
+
+    x=radio*cos(w);
+    z=radio*sin(w);
+
+    vertices.push_back({x,0.0,z});
+    vertices.push_back({x,1.0,z});
+    col_ver.push_back({1.0,1.0,1.0});
+    col_ver.push_back({1.0,1.0,1.0});
+
+  }
+
+
+
+  for(unsigned i=0; i<vertices.size()-2; i++){
+    if(i%2==0)
+      triangulos.push_back({i,i+1,i+2});
+    else
+      triangulos.push_back({i,i+2,i+1});
+  }
+
+   //AÑADO COORDENADAS DE TEXTURA
+
+   float x_tex;
+   for(unsigned i=0; i<vertices.size()/4; i++){
+
+  
+    cc_tt_ver.push_back({float(i)/float(n/2),1.0});
+    cc_tt_ver.push_back({float(i)/float(n/2),0.0});
+  }
+
+  float k = 2;
+
+   for(unsigned i=0; i<vertices.size()/4; i++){
+   
+  
+    cc_tt_ver.push_back({float(i)/float(n/k),1.0});
+    cc_tt_ver.push_back({float(i)/float(n/k),0.0});
+  }
+
+
+   calcularNormales();
+}
+
+TapaCilindro::TapaCilindro()
+:  MallaInd( "TapaCilindro" )
+{
+  int n=50;
+  float x,z,w; //Angulo y coordenadas
+  float radio=0.5;
+
+  vertices.push_back({0.0,1.0,0.0});
+  cc_tt_ver.push_back({0.5,0.5});
+
+  for(unsigned i=0; i<2*n+1; i++){
+    w=2*M_PI/n *i;
+
+    x=radio*cos(w);
+    z=radio*sin(w);
+
+    vertices.push_back({x,1.0,z});
+    col_ver.push_back({1.0,1.0,1.0});
+  }
+
+  for(unsigned i=1; i<vertices.size()-2; i++){
+      triangulos.push_back({0,i+1,i});
+  }
+
+  float x_tex=0.0;
+  float y_tex=0.0;
+
+  
+  for(unsigned i=0; i<vertices.size(); i++){
+     cc_tt_ver.push_back({0.5+0.5*cos(float(2*M_PI*i)/float(n)),0.5+0.5*sin(float(2*M_PI*i)/float(n))});
+   }
+
+      calcularNormales();
+}
+
+
+
+TapaCilindroInf::TapaCilindroInf()
+:  MallaInd( "TapaCilindro" )
+{
+  int n=50;
+  float x,z,w; //Angulo y coordenadas
+  float radio=0.5;
+
+  vertices.push_back({0.0,0.0,0.0});
+  cc_tt_ver.push_back({0.5,0.5});
+
+  for(unsigned i=0; i<2*n+1; i++){
+    w=2*M_PI/n *i;
+
+    x=radio*cos(w);
+    z=radio*sin(w);
+
+    vertices.push_back({x,0.0,z});
+    col_ver.push_back({1.0,1.0,1.0});
+  }
+
+  for(unsigned i=1; i<vertices.size()-2; i++){
+      triangulos.push_back({0,i+1,i});
+  }
+
+  float x_tex=0.0;
+  float y_tex=0.0;
+
+  
+  for(unsigned i=0; i<vertices.size(); i++){
+     cc_tt_ver.push_back({0.5+0.5*sin(float(2*M_PI*i)/float(n)),0.5+0.5*cos(float(2*M_PI*i)/float(n))});
+   }
+
+      calcularNormales();
+}
+
+
+CilindroTextura::CilindroTextura(){
+   Textura * textura = new Textura("../recursos/imgs/lata-coke.jpg");
+   Textura * textura2 = new Textura("../recursos/imgs/window-icon.jpg");
+   agregar( new Material(textura, 1, 0.5, 1, 70) );
+
+   agregar(new CilindroNuevo());
+
+    agregar( new Material(textura2, 1, 0.5, 1, 70) );
+   agregar(new TapaCilindro());
+   agregar(new TapaCilindroInf());
+
+   ponerNombre("Cilindro con textura");
+}
+
+
 
 
 // -----------------------------------------------------------------------------------------------

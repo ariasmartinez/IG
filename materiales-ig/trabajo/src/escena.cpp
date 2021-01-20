@@ -29,12 +29,12 @@ Escena::Escena()
    // (sustituir la cámara orbital simple ('CamaraOrbitalSimple') por varias cámaras de 3 modos ('Camara3Modos')
   // camaras.push_back( new CamaraOrbitalSimple() );
   
-   camaras.push_back(new Camara3Modos(true, {0.0,2.0,7.0}, 1.0, {0.0,0.0,0.0}, 90.0)); //alzado
-   camaras.push_back( new Camara3Modos(false, {-5.0,2.0,0.0}, 1.0, {0.0,0.0,0.0},60.0) ); //perfil
-   camaras.push_back( new Camara3Modos(true, {0.0,7.0,1.0}, 4.0, {0.0,0.0,0.0},90.0) ); //planta
+   camaras.push_back(new Camara3Modos(true, {0.0,2.0,7.0}, 1.0, {0.0,0.0,0.0}, 90.0)); //alzado  //perspectiva
+   camaras.push_back( new Camara3Modos(false, {-5.0,2.0,0.0}, 1.0, {0.0,0.0,0.0},60.0) ); //perfil  //ortogonal
+   camaras.push_back( new Camara3Modos(true, {0.0,7.0,1.0}, 4.0, {0.0,0.0,0.0},90.0) ); //planta  //perspectiva
  
 
-   camaras.push_back( new Camara3Modos(true, {7.0,7.0,7.0}, 4.0, {0.0,0.0,0.0},90.0) ); //planta
+   camaras.push_back( new Camara3Modos(true, {7.0,7.0,7.0}, 4.0, {0.0,0.0,0.0},90.0) ); //planta  //perspectiva
 
 }
 // -----------------------------------------------------------------------------------------------
@@ -220,6 +220,7 @@ Escena1::Escena1()
    cout << "Creando objetos de escena 1 .... " << flush ;
  
    // añadir el objeto 'Cubo' a la lista de objetos de esta escena:
+   objetos.push_back(new CilindroTextura());
    objetos.push_back( new Cubo() );
    objetos.push_back( new Tetraedro());
    objetos.push_back( new CuboColores() );
