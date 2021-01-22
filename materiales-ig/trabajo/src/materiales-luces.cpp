@@ -37,7 +37,7 @@ Textura::Textura( const std::string & nombreArchivoJPG )
    // COMPLETAR: práctica 4: cargar imagen de textura
    // (las variables de instancia están inicializadas en la decl. de la clase)
    // .....
-   imagen = LeerArchivoJPEG(nombreArchivoJPG.c_str(), ancho, alto); //DUDA : resuelto, poner c_str()
+   imagen = LeerArchivoJPEG(nombreArchivoJPG.c_str(), ancho, alto);
 }
 
 // ---------------------------------------------------------------------
@@ -63,7 +63,7 @@ void Textura::enviar()
                       imagen                    // puntero a los bytes con texels
    );
 
-   //DUDA
+   
 
 }
 
@@ -152,7 +152,7 @@ void Material::activar( Cauce & cauce )
       textura->activar(cauce);
    else 
       cauce.fijarEvalText(false);
-   //DUDA : cauce.fijarEvalText(false);
+   
    cauce.fijarParamsMIL({k_amb, k_amb, k_amb}, {k_dif, k_dif, k_dif}, {k_pse, k_pse, k_pse}, exp_pse);
 
 }
@@ -224,12 +224,9 @@ void ColFuentesLuz::activar( Cauce & cauce )
    // .....
    std::vector<Tupla3f> color;
    std::vector<Tupla4f> pos_dir_wc;
-   //for (int i = 0; i < vpf.size(); i++){
-    //  color.push_back(vpf[i]->color);
-    //  pos_dir_wc.push_back(vpf[i].); //DUDA
-   //}
+   
    for(unsigned int i=0; i< vpf.size(); i++){
-      color.push_back(vpf[i]->color); //DUDA
+      color.push_back(vpf[i]->color); 
       Tupla4f ejeZ = {0.0,0.0,1.0,0.0};
 
       ejeZ=MAT_Rotacion(vpf[i]->longi, 0.0, 1.0, 0.0) * ejeZ;

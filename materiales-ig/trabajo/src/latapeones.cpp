@@ -9,7 +9,7 @@ LataCocaCola::LataCocaCola(){
    agregar(new LataTapaInf());
    
    Textura * text = new Textura("../recursos/imgs/lata-coke.jpg");
-   agregar( new Material(text, 0.6,0.3,0.7,100) ); //DUDA
+   agregar( new Material(text, 0.6,0.3,0.7,100) );
     
    agregar(new MallaRevolPLY("../recursos/plys/lata-pcue.ply", 20));
   
@@ -21,14 +21,14 @@ LataCocaCola::LataCocaCola(){
 
 LataTapaSup::LataTapaSup(){
   
-    agregar( new Material(0.6,0.6,1.0,30)  ); //DUDA
+    agregar( new Material(0.6,0.6,1.0,30)  ); 
     agregar(new MallaRevolPLY("../recursos/plys/lata-psup.ply", 20));
     ponerNombre("Tapa superior de la lata");
     ponerIdentificador(-1);
 }
 
 LataTapaInf::LataTapaInf(){
-    agregar( new Material(0.6,0.6,1.0,30) ); //DUDA
+    agregar( new Material(0.6,0.6,1.0,30) ); 
     agregar(new MallaRevolPLY("../recursos/plys/lata-pinf.ply", 20));
     ponerNombre("Tapa inferior de la lata");
     ponerIdentificador(-1);
@@ -49,8 +49,8 @@ Peones::Peones(){
 
 PeonMadera::PeonMadera(){
     TexturaPeon * tex = new TexturaPeon("../recursos/imgs/text-madera.jpg");
-    //Textura * tex = new Textura("../recursos/imgs/text-madera.jpg");
-    agregar( new Material(tex, 0.1, 0.7, 1.0, 100) ); //DUDA
+    
+    agregar( new Material(tex, 0.1, 0.7, 1.0, 100) ); 
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon Madera");
     ponerIdentificador(2);
@@ -59,7 +59,7 @@ PeonMadera::PeonMadera(){
 PeonBlanco::PeonBlanco(){
      ponerColor({1.0,1.0,1.0});
   
-    agregar( new Material(0.1, 0.8, 0.0, 100) ); //DUDA
+    agregar( new Material(0.1, 0.8, 0.0, 100) );
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon Blanco");
     ponerIdentificador(3);
@@ -68,7 +68,7 @@ PeonBlanco::PeonBlanco(){
 PeonNegro::PeonNegro(){
     ponerColor({0.0,0.0,0.0});
     
-    agregar( new Material(0.8, 0.3, 1.0, 100) ); //DUDA
+    agregar( new Material(0.8, 0.3, 1.0, 100) );
     agregar(new MallaRevolPLY("../recursos/plys/peon", 20));
     ponerNombre("Peon negro");
     ponerIdentificador(4);
@@ -100,12 +100,13 @@ LataUGR::LataUGR(){
    
    agregar(new LataTapaInf());
  
-   Textura * text = new Textura("../recursos/imgs/lata-pepsi.jpg");
-   agregar( new Material(text, 0.6,0.3,0.7,100) ); //DUDA
+  
+   Textura * text = new Textura("../recursos/imgs/window-icon.jpg");
+   agregar( new Material(text, 0.6,0.3,0.7,100) );
     
    agregar(new MallaRevolPLY("../recursos/plys/lata-pcue.ply", 20));
 
-   ponerNombre("LataPepsi");
+   ponerNombre("LataUgr");
    ponerIdentificador(5);
 }
 
@@ -114,11 +115,11 @@ LataPepsi::LataPepsi(){
    
    agregar(new LataTapaInf());
 
-   Textura * text = new Textura("../recursos/imgs/window-icon.jpg");
-   agregar( new Material(text, 0.6,0.3,0.7,100) ); //DUDA
+    Textura * text = new Textura("../recursos/imgs/lata-pepsi.jpg");
+   agregar( new Material(text, 0.6,0.3,0.7,100) );
     
    agregar(new MallaRevolPLY("../recursos/plys/lata-pcue.ply", 20));
-   //ponerNombre("Cuerpo de la lata");
-   ponerNombre("LataUGR");
+   
+   ponerNombre("LataPepsi");
    ponerIdentificador(6);
 }

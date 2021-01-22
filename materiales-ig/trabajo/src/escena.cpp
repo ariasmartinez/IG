@@ -22,7 +22,7 @@ Escena::Escena()
    // COMPLETAR: Práctica 4: inicializar 'col_fuentes' y 'material_ini'
    // ...
    col_fuentes = new Col2Fuentes();
-   material_ini = new Material(0.5,0.8,1.5,60); //DUDA
+   material_ini = new Material(0.4,0.3,0.3,60);
 
 
    // COMPLETAR: Práctica 5: hacer 'push_back' de varias camaras perspectiva u ortogonales,
@@ -105,7 +105,7 @@ void Escena::visualizarGL( ContextoVis & cv )
       col_fuentes->activar(*cauce); //activar la coleccion de fuentes
     
       if(material_ini!=nullptr){
-         cv.material_act = material_ini;  //DUDA
+         cv.material_act = material_ini;  
          material_ini->activar(*cauce);  //activar el material inicial
       }
 
@@ -245,12 +245,11 @@ Escena2::Escena2(){
    using namespace std;
    cout << "Creando objetos de escena 2..." << flush;
   
-   objetos.push_back(new MallaPLY("../recursos/plys/ant"));
+   
    objetos.push_back(new MallaRevolPLY("../recursos/plys/peon", 10));
    objetos.push_back(new MallaRevolPLY("../recursos/plys/lata-pcue", 10));
    objetos.push_back(new MallaPLY("../recursos/plys/beethoven"));
-   objetos.push_back(new MallaPLY("../recursos/plys/big_dodge.ply"));
-  objetos.push_back(new MallaPLY("../recursos/plys/cow.ply"));
+
 
    objetos.push_back( new Cilindro(20,50));
    objetos.push_back( new Cono(20,50));

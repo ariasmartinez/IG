@@ -99,18 +99,9 @@ void NodoGrafoEscena::visualizarGL( ContextoVis & cv )
    for (unsigned i = 0; i < entradas.size(); i++)
       switch( entradas[i].tipo)
       {
-         case TipoEntNGE::objeto :
-            
-            //color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
-            
-            //if (tieneColor()){
-               //color = cv.cauce_act->leerColorActual(); // guardar color actual en el cauce
-              // glColor3fv(leerColor()); //fijar color en el cauce leyendolo del objeto
-            //}
+         case TipoEntNGE::objeto : 
             entradas[i].objeto->visualizarGL(cv); //visualizamos
-            //if (tieneColor())
-              // glColor3fv(color);  //restaurar color del cauce 
-            break;
+         break;
 
          case TipoEntNGE::transformacion:
             cv.cauce_act->compMM(*(entradas[i].matriz)); 
@@ -304,7 +295,7 @@ bool NodoGrafoEscena::buscarObjeto
 
 NodoCubo24::NodoCubo24(){
    Textura * tex = new Textura("../recursos/imgs/window-icon.jpg");
-   agregar( new Material(tex, 0.8, 0.6, 0.5, 30) ); //DUDA
+   agregar( new Material(tex, 0.4, 0.3, 0.3, 30) ); 
    agregar(new Cubo24());
 
    ponerNombre("Cubo 24 vértices");

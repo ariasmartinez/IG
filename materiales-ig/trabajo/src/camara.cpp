@@ -338,7 +338,6 @@ void Camara3Modos::desplRotarXY( const float da, const float db )
 
          actualizarEjesMCV();
 
-         //DUDA
 
          
          break ;
@@ -351,9 +350,9 @@ void Camara3Modos::desplRotarXY( const float da, const float db )
          // .....
          // (nota: los ejes no cambian)
 
-         //cambio la suma por la resta
+         
          //divido por 50 para que sea mas suave
-         punto_atencion = punto_atencion - Tupla3f({da/50.0,db/50.0,0});//DUDA
+         punto_atencion = punto_atencion + Tupla3f({da/50.0,db/50.0,0});
 
          break ;
       }
@@ -377,7 +376,7 @@ void Camara3Modos::moverZ( const float dz )
          // nota: los ejes no cambian, ni el punto de atención
          // .....
          float r_min = 0.5; 
-         float epsilon = 0.1; //DUDA
+         float epsilon = 0.1; 
          float r = r_min+(org_polares(2)-r_min)*pow(1.0+epsilon, dz);
          org_polares = {org_polares(0), org_polares(1), r};
          org_cartesianas = Cartesianas(org_polares);
@@ -391,8 +390,8 @@ void Camara3Modos::moverZ( const float dz )
          // nota: los ejes no cambian
          // .....
 
-         //cambio mas por menos
-         punto_atencion = punto_atencion - Tupla3f({0.0,0.0,dz});
+       
+         punto_atencion = punto_atencion + Tupla3f({0.0,0.0,dz});
          break ;
       }
    }

@@ -1,3 +1,4 @@
+//Nombre: Celia, Apellidos: Arias Martínez, DNI: 26510285w (DDGG IG curso 20-21)
 #include "ig-aux.h"
 #include "tuplasg.h"
 #include "practicas.h"
@@ -25,7 +26,7 @@ void FijarColVertsIdent( Cauce & cauce, const int ident )  // 0 ≤ ident < 2^24
    const unsigned char
       byteR = (ident) % 0x100U,  //rojo = byte menos significativo
       byteG = (ident / 0x100U) % 0x100U,  // verde = byte intermedio
-      byteB = (ident / 0x1000U) % 0x100U;  // azul = byte más significativo
+      byteB = (ident / 0x10000U) % 0x100U;  // azul = byte más significativo
    glColor3ub(byteR, byteG, byteB);  // cambio de color en OpenGL.
 }
 
@@ -86,7 +87,7 @@ bool Seleccion( int x, int y, Escena * escena, ContextoVis & cv_dib )
    cont->modo_visu = ModosVisu::relleno;
    cont->cauce_act = cv_dib.cauce_act;
    cont->ventana_tam_x = cv_dib.ventana_tam_x;
-   cont->ventana_tam_y = cv_dib.ventana_tam_y;  //DUDA mirar si no funciona
+   cont->ventana_tam_y = cv_dib.ventana_tam_y;  
 
    FijarColVertsIdent(*cont->cauce_act, 0);
    // 3. Activar fbo, cauce y viewport. Configurar cauce (modo solido relleno, sin ilum.

@@ -95,7 +95,7 @@ void MallaInd::calcularNormalesTriangulos()
       else
          nor_tri.push_back({0,0,0});
    }
-   //DUDA
+   
    CError();
 }
 
@@ -231,7 +231,7 @@ MallaPLY::MallaPLY( const std::string & nombre_arch )
    // COMPLETAR: práctica 4: invocar  a 'calcularNormales' para el cálculo de normales
    // .................
 
-   calcularNormales(); //DUDA
+   calcularNormales(); 
 
 }
 
@@ -291,7 +291,7 @@ Tetraedro::Tetraedro() : MallaInd("tetraedro"){
    };
 
    ponerColor({0.0, 0.0, 1.0});
-   calcularNormales(); //DUDA
+   calcularNormales(); 
    ponerIdentificador(8);
 
 }
@@ -384,7 +384,7 @@ Cubo24::Cubo24() : MallaInd("cubo de 24 vértices")
       {0.0,1.0},{1.0,1.0},
       {1.0,0.0},{0.0,0.0},
       {1.0,1.0},{0.0,1.0},
-   };   //DUDA
+   };   
 
    calcularNormales();
    ponerIdentificador(6);
