@@ -220,6 +220,7 @@ Escena1::Escena1()
    cout << "Creando objetos de escena 1 .... " << flush ;
  
    // añadir el objeto 'Cubo' a la lista de objetos de esta escena:
+   objetos.push_back(new Invocacion2());
    objetos.push_back(new CilindroTextura());
    objetos.push_back( new Cubo() );
    objetos.push_back( new Tetraedro());

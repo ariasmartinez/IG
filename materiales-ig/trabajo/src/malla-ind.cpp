@@ -407,6 +407,8 @@ float n=50;
     col_ver.push_back({1.0,1.0,1.0});
     col_ver.push_back({1.0,1.0,1.0});
 
+   
+
   }
 
 
@@ -431,6 +433,48 @@ float n=50;
 
    calcularNormales();
 }
+
+
+
+MallaCil::MallaCil(const int n){
+
+
+  for(int i=0; i<=n; i++){
+
+      const float f=float(i)/float(n),
+      ang=2.0*M_PI*f,
+      vx=std::cos(ang),
+      vz=std::sin(ang);
+
+      //Vertice 3*i(lateral del cilindro,inferior)
+      vertices.push_back({vx,0.0,vz});
+     nor_ver.push_back({vx,0.0,vz});      
+      cc_tt_ver.push_back({f,1.0});
+      //Vertice 3*i+1(lateral del cilindro,superior)
+      vertices.push_back({vx,1.0,vz});
+      nor_ver.push_back({vx,0.0,vz});
+      cc_tt_ver.push_back({f,0.0});
+
+      //vertice 3*i+2(tapa, es el anterior vertice duplicado)
+      vertices.push_back({vx,1.0,vz});
+      nor_ver.push_back({0.0,1.0,0.0});
+      cc_tt_ver.push_back({0.5+0.5*vz,0.5+0.5*vx});
+
+
+      //triangulos
+      if(i<n){
+         triangulos.push_back({3*i,3*i+1,3*(i+1)});
+         triangulos.push_back({3*(i+1),3*i+1,3*(i+1)+1});
+         triangulos.push_back({3*i+2,3*(n+1),3*(i+1)+2});
+      }
+   }
+  //vertice 3*(n+1)(centro de la tapa superior)
+  vertices.push_back({0.0,1.0,0.0});
+   nor_ver.push_back({0.0,1.0,0.0});
+   cc_tt_ver.push_back({0.5,0.5});
+
+}
+
 
 
 //cilindro con la textura dos veces
@@ -565,16 +609,111 @@ CilindroTextura::CilindroTextura(){
 
    agregar(new CilindroNuevo());
 
-    agregar( new Material(textura2, 1, 0.5, 1, 70) );
-   agregar(new TapaCilindro());
-   agregar(new TapaCilindroInf());
+    //agregar( new Material(textura2, 1, 0.5, 1, 70) );
+   //agregar(new TapaCilindro());
+   //agregar(new TapaCilindroInf());
 
    ponerNombre("Cilindro con textura");
+   
 }
 
 
+Invocacion::Invocacion(){
+   double n = 16;
+    Textura * textura = new Textura("../recursos/imgs/window-icon.jpg");
+     Textura * textura2 = new Textura("../recursos/imgs/lata-pepsi.jpg");
+      Textura * textura3 = new Textura("../recursos/imgs/lata-coke.jpg");
+   CilindroNuevo * c = new CilindroNuevo();
+   TapaCilindro * ts = new TapaCilindro();
+   TapaCilindroInf * ti = new TapaCilindroInf();
+
+   agregar( new Material(textura, 1, 0.5, 1, 70) );
+  
+     agregar(MAT_Traslacion(-2,0,-2));
+   
+   for (int i = 0; i < n; i++){
+      
+      if (i % 2 == 0)
+         agregar( new Material(textura2, 1, 0.5, 1, 70) );
+      else
+         agregar( new Material(textura3, 1, 0.5, 1, 70) );
+      agregar(c);
+      agregar( new Material(textura, 1, 0.5, 1, 70) );
+      agregar(ts);
+      agregar(ti);
+      agregar(MAT_Traslacion(2*sin(2*M_PI*i/n), 0, 2*cos (2*M_PI*i/n)));
+   }
+   
+ 
+}
+
+Invocacion2::Invocacion2(){
+      double n = 8;
+
+   ponerNombre("Invocacion");
+   //agregar( new Material(textura, 1, 0.5, 1, 70) );
+   //agregar(new VariasLatasPeones());
+   Textura * textura = new Textura("../recursos/imgs/window-icon.jpg");
+
+     agregar(MAT_Traslacion(-n,0,-n));
+   
+   for (int i = 0; i < n; i++){
+      
+       agregar( new Material(textura, 1, 0.5, 1, 70) );
+      agregar(MAT_Traslacion(n*sin(2*M_PI*i/n), 0,n*cos (2*M_PI*i/n)));
+       MallaCil * c = new MallaCil(30);
+       c->ponerIdentificador(100+i);
+      agregar(c);
+   }
+   
+   
+}
 
 
+CilindroI::CilindroI(int i){
+   Textura * textura = new Textura("../recursos/imgs/window-icon.jpg");
+   Textura * textura2 = new Textura("../recursos/imgs/lata-pepsi.jpg");
+   Textura * textura3 = new Textura("../recursos/imgs/lata-coke.jpg");
+   CilindroNuevo * c = new CilindroNuevo();
+   TapaCilindro * ts = new TapaCilindro();
+   TapaCilindroInf * ti = new TapaCilindroInf();
+
+   if (i % 2 == 0)
+         agregar( new Material(textura2, 1, 0.5, 1, 70) );
+   else
+      agregar( new Material(textura3, 1, 0.5, 1, 70) );
+   agregar(c);
+   agregar( new Material(textura, 1, 0.5, 1, 70) );
+   agregar(ts);
+   agregar(ti);
+
+   ponerIdentificador(30);
+   ponerNombre("Cilindro Invoación número "+i);
+}
+
+
+CuboUgr::CuboUgr(){
+   Textura * tex = new Textura("../recursos/imgs/window-icon.jpg");
+   agregar( new Material(tex, 0.2, 0.4, 0.4, 20) );
+   agregar(new CilindroTextura());
+   ponerNombre("Cubo 24 vertices");
+}
+
+Invocacion3::Invocacion3(){
+   int n = 8;
+   ponerNombre("Invocacion");
+   //agregar(new VariasLatasPeones());
+
+   agregar(MAT_Traslacion(-sqrt(n),0,-sqrt(n)));
+   for (int i=0; i<n; i++){
+      const float angulo=i*2.0*M_PI/float(n);
+      agregar(MAT_Traslacion(n*cos(angulo),0,n*sin(angulo)));
+      CuboUgr * nodo= new CuboUgr();
+
+      nodo->ponerIdentificador(1000+i);
+      agregar(nodo);
+   }
+}
 // -----------------------------------------------------------------------------------------------
 
 

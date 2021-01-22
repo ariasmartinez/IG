@@ -25,7 +25,7 @@ void FijarColVertsIdent( Cauce & cauce, const int ident )  // 0 ≤ ident < 2^24
    const unsigned char
       byteR = (ident) % 0x100U,  //rojo = byte menos significativo
       byteG = (ident / 0x100U) % 0x100U,  // verde = byte intermedio
-      byteB = (ident / 0x1000U) % 0x100U;  // azul = byte más significativo
+      byteB = (ident / 0x10000U) % 0x100U;  // azul = byte más significativo
    glColor3ub(byteR, byteG, byteB);  // cambio de color en OpenGL.
 }
 
@@ -131,6 +131,7 @@ bool Seleccion( int x, int y, Escena * escena, ContextoVis & cv_dib )
    //    e informar del nombre del mismo (si no se encuentra, indicarlo)
    //   (usar 'buscarObjeto')
    // .....
+   std::cout << "Identificador= " << id << "  Id del objeto=" << obj->leerIdentificador() << endl;
    Objeto3D * obj_buscado;
    Tupla3f pos_obj_buscado;
    if (obj->buscarObjeto(id, MAT_Ident() ,&obj_buscado, pos_obj_buscado)){

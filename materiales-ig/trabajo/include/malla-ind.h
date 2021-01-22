@@ -142,7 +142,42 @@ class CilindroTextura : public NodoGrafoEscena
   public:
     CilindroTextura();
 };
+class Invocacion : public NodoGrafoEscena
+{
+   public:
+      Invocacion();
+};
 
+
+class Invocacion2 : public NodoGrafoEscena
+{
+   public:
+      Invocacion2();
+};
+
+class CilindroI : public NodoGrafoEscena
+{
+   public:
+      CilindroI(int i);
+};
+
+class Invocacion3: public NodoGrafoEscena
+{
+   public:
+      Invocacion3();
+};
+class CuboUgr : public NodoGrafoEscena
+{
+   public:
+      CuboUgr();
+};
+
+
+class MallaCil : public MallaInd
+{
+   public:
+      MallaCil(int n);
+};
 
 
 #endif
